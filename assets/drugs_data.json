@@ -1,0 +1,37 @@
+[
+ {
+   "Category": "Vitamins",
+   "Drugs Name": "Appeton Lysine (????) (60 ml)",
+   "Ingredients": "Lysine",
+   "Type": "Syrup (????)",
+   "Price": 8400
+ },
+ {
+   "Category": "Vitamins",
+   "Drugs Name": "Appeton Lysine (60 Tabs)",
+   "Ingredients": "Lysine",
+   "Type": "Tablet (???????)",
+   "Price": 15850
+ },
+ {
+   "Category": "Vitamins",
+   "Drugs Name": "Appeton Teengrow (10 ?????? 3 ???) )",
+   "Ingredients": "Supplement for teenagers",
+   "Type": "Caplet",
+   "Price": 15750
+ },
+ {
+   "Category": "Vitamins",
+   "Drugs Name": "Appeton Hi Q DHA (60 Tabs)",
+   "Ingredients": "DHA",
+   "Type": "Tablet (???????)",
+   "Price": 20250
+ },
+ {
+   "Category": "Vitamins",
+   "Drugs Name": "Appeton Lysine (20 Tabs)",
+   "Ingredients": "Lysine",
+   "Type": "Tablet (???????)",
+   "Price": 6550
+ }
+]
