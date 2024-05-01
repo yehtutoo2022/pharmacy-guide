@@ -41,3 +41,5 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+/android/
+/android/app/src/main/kotlin/com/yho/pharmacyguide2/pharmacy_guide2/

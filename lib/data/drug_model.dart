@@ -1,3 +1,5 @@
+
+
 class Drug {
   final String name;
   final String category;
@@ -31,5 +33,22 @@ class Drug {
       'Type': type,
       'Price': price,
     };
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other.runtimeType != runtimeType) return false;
+    return other is Drug &&
+        other.name == name &&
+        other.category == category &&
+        other.ingredients == ingredients &&
+        other.type == type &&
+        other.price == price;
+  }
+
+  @override
+  int get hashCode {
+    return Object.hash(name, category, ingredients, type, price);
   }
 }

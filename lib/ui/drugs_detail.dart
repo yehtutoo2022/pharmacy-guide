@@ -1,69 +1,3 @@
-// import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';
-// import '../data/favorite_drug_provider.dart';
-// import '../data/drug_model.dart';
-//
-// class DrugDetailScreen extends StatefulWidget {
-//   final Drug drug;
-//
-//   DrugDetailScreen({required this.drug});
-//
-//   @override
-//   State<DrugDetailScreen> createState() => _DrugDetailScreenState();
-// }
-//
-// class _DrugDetailScreenState extends State<DrugDetailScreen> {
-//   late FavoriteDrugProvider favoriteProvider;
-//   bool isFavorite = false;
-//
-//   @override
-//   void didChangeDependencies() {
-//     super.didChangeDependencies();
-//     favoriteProvider = Provider.of<FavoriteDrugProvider>(context, listen: false);
-//     setState(() {
-//       isFavorite = favoriteProvider.isDrugFavorite(widget.drug);
-//     });
-//   }
-//
-//
-//   void toggleFavorite() {
-//     setState(() {
-//       isFavorite = !isFavorite;
-//     });
-//     favoriteProvider.toggleFavorite(widget.drug);
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text(widget.drug.name),
-//         actions: [
-//           IconButton(
-//             icon: Icon(
-//               Icons.favorite,
-//               color: isFavorite ? Colors.red : null,
-//             ),
-//             onPressed: toggleFavorite,
-//           ),
-//         ],
-//       ),
-//       body: Padding(
-//         padding: EdgeInsets.all(16.0),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             Text('Category: ${widget.drug.category}'),
-//             Text('Ingredients: ${widget.drug.ingredients}'),
-//             Text('Type: ${widget.drug.type}'),
-//             Text('Price: \$${widget.drug.price}'),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../data/favorite_drug_provider.dart';
@@ -81,17 +15,16 @@ class DrugDetailScreen extends StatefulWidget {
 
 class _DrugDetailScreenState extends State<DrugDetailScreen> {
   late FavoriteDrugProvider favoriteProvider;
+  late HistoryProvider historyProvider;
   bool isFavorite = false;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
     favoriteProvider = Provider.of<FavoriteDrugProvider>(context, listen: false);
-    setState(() {
-      isFavorite = favoriteProvider.isDrugFavorite(widget.drug);
-    });
-
-    Provider.of<HistoryProvider>(context, listen: false).addToHistory(widget.drug);
+    isFavorite = favoriteProvider.isDrugFavorite(widget.drug);
+    historyProvider = Provider.of<HistoryProvider>(context, listen: false);
+    historyProvider.addToHistory(widget.drug);
   }
 
   void toggleFavorite() {
@@ -103,18 +36,25 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.drug.name),
         actions: [
-          IconButton(
-            icon: Icon(
-              isFavorite ? Icons.favorite : Icons.favorite_border,
-              color: isFavorite ? Colors.red : null,
-            ),
-            onPressed: toggleFavorite,
+          Consumer<FavoriteDrugProvider>(
+            builder: (context, favoriteProvider, _) {
+              bool isFavorite = favoriteProvider.isDrugFavorite(widget.drug);
+              return IconButton(
+                icon: Icon(
+                  isFavorite ? Icons.favorite : Icons.favorite_border,
+                  color: isFavorite ? Colors.red : null,
+                ),
+                onPressed: toggleFavorite,
+              );
+            },
           ),
         ],
+
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),

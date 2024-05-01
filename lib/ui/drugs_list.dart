@@ -13,7 +13,7 @@ class DrugsListScreen extends StatefulWidget {
 }
 
 class _DrugsListScreenState extends State<DrugsListScreen> {
-  List<dynamic> allDrugs = [];
+  late List<Drug> allDrugs;
   bool isFirstTime = true;
 
   List<dynamic> displayedDrugs = [];
@@ -22,11 +22,15 @@ class _DrugsListScreenState extends State<DrugsListScreen> {
   @override
   void initState() {
     super.initState();
+    allDrugs = []; // Initialize allDrugs as an empty list
     loadData();
   }
 
   Future<void> loadData() async {
+    // Initialize _prefs first
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // Read isFirstTime
     isFirstTime = prefs.getBool('isFirstTime') ?? true;
 
     final file = File('${(await getApplicationDocumentsDirectory()).path}/drugs_data.json');
@@ -35,7 +39,7 @@ class _DrugsListScreenState extends State<DrugsListScreen> {
       final jsonData = await file.readAsString();
       setState(() {
         allDrugs = (json.decode(jsonData) as List).map((item) => Drug.fromJson(item)).toList();
-        displayedDrugs = List.from(allDrugs); // Initialize displayed drugs with all drugs
+        displayedDrugs = List.from(allDrugs);
       });
     } else {
       if (isFirstTime) {
@@ -77,7 +81,7 @@ class _DrugsListScreenState extends State<DrugsListScreen> {
 
       setState(() {
         allDrugs = (json.decode(response.body) as List).map((item) => Drug.fromJson(item)).toList();
-        displayedDrugs = List.from(allDrugs); // Initialize displayed drugs with all drugs
+        displayedDrugs = List.from(allDrugs);
       });
 
       // Show dialog to indicate the data has been downloaded
