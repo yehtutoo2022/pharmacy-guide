@@ -1,6 +1,13 @@
 # pharmacy_guide2
 
-A new Flutter project.
+A testing app to work with json and local storage like custom dictionary dapp 
+
+Error in this 
+=============
+LateInitialization error when tapping drug detail screen for first time of application open
+
+Favorite screen and History screen has not been initialized for the first time 
+
 
 ## Getting Started
 
