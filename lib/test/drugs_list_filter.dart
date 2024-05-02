@@ -18,22 +18,82 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
   late List<Drug> allDrugs;
   bool isFirstTime = true;
 
+  // Define a new list to store filtered drugs
+  List<dynamic> filteredDrugs = [];
+
+
   List<dynamic> displayedDrugs = [];
   TextEditingController searchController = TextEditingController();
 
-  // Define list of available categories
   List<String> categories = [];
+  List<String> types = [];
 
-  // Define selected filter criteria
-  // String? selectedCategory;
   String? selectedCategory = 'All';
+  // Define selected filter criteria for type
+  String? selectedType = 'All';
 
   @override
   void initState() {
     super.initState();
-    allDrugs = []; // Initialize allDrugs as an empty list
+    allDrugs = [];
+    filteredDrugs = List.from(allDrugs);
     loadData();
   }
+
+  void _filterDrugsByCategory() {
+    if (selectedCategory == null || selectedCategory == 'All') {
+      // If no category is selected or 'All' is selected, show all drugs
+      setState(() {
+        filteredDrugs = List.from(allDrugs);
+        _updateTypesList(selectedCategory!);
+        selectedType = 'All';
+      });
+    } else {
+      // Filter drugs based on the selected category
+      setState(() {
+        filteredDrugs = allDrugs
+            .where((drug) => drug.category == selectedCategory)
+            .toList();
+        _updateTypesList(selectedCategory!); // Update types list
+        selectedType = 'All';
+      });
+    }
+  }
+
+  void _filterDrugsByType() {
+    if (selectedType == null || selectedType == 'All') {
+      // If no type is selected or 'All' is selected, show drugs based on selected category
+      _filterDrugsByCategory();
+    } else {
+      // Filter drugs based on the selected type
+      setState(() {
+        filteredDrugs = allDrugs
+            .where((drug) => drug.category == selectedCategory && drug.type == selectedType)
+            .toList();
+      });
+    }
+  }
+
+  void _updateTypesList(String selectedCategory) {
+    if (selectedCategory == null || selectedCategory == 'All') {
+      // If no category is selected or 'All' is selected, display all types
+      setState(() {
+        types = allDrugs.map((drug) => drug.type).toSet().toList();
+        types.sort((a, b) => a.compareTo(b));
+      });
+    } else {
+      // Filter types based on the selected category
+      setState(() {
+        types = allDrugs
+            .where((drug) => drug.category == selectedCategory)
+            .map((drug) => drug.type)
+            .toSet()
+            .toList();
+        types.sort((a, b) => a.compareTo(b));
+      });
+    }
+  }
+
 
   Future<void> loadData() async {
     // Initialize _prefs first
@@ -48,11 +108,20 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
       final jsonData = await file.readAsString();
       setState(() {
         allDrugs = (json.decode(jsonData) as List).map((item) => Drug.fromJson(item)).toList();
+        filteredDrugs = List.from(allDrugs);
         displayedDrugs = List.from(allDrugs);
+
       });
 
       // Get unique categories from all drugs
       categories = allDrugs.map((drug) => drug.category).toSet().toList();
+      categories.sort((a,b) => a.compareTo(b));
+
+      //Get unique type from all drugs
+      types = allDrugs.map((drug) => drug.type).toSet().toList();
+      //sort list of types by Alphabetically
+      types.sort((a, b) => a.compareTo(b));
+
 
     } else {
       if (isFirstTime) {
@@ -124,23 +193,6 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
     }
   }
 
-  //filter function of category
-  void _filterDrugs() {
-    if (selectedCategory == null || selectedCategory == 'All') {
-      // If no category is selected or 'All' is selected, display all drugs
-      setState(() {
-        displayedDrugs = List.from(allDrugs);
-      });
-    } else {
-      // Filter drugs based on the selected category
-      setState(() {
-        displayedDrugs = allDrugs
-            .where((drug) => drug.category == selectedCategory)
-            .toList();
-      });
-    }
-  }
-
   void _searchDrugs(String query) {
     if (query.isEmpty) {
       // If the search query is empty, display all drugs
@@ -187,35 +239,96 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Filter by Category',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+            //start of filter by category
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Filter by Category',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-              ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DropdownButtonFormField<String>(
+                    value: selectedCategory,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedCategory = value;
+                        _filterDrugsByCategory();
+                      });
+                    },
+                    items: ['All', ...categories].map((category) {
+                      return DropdownMenuItem<String>(
+                        value: category,
+                        child: Text(category),
+                      );
+                    }).toList(),
+                    icon: Icon(Icons.arrow_drop_down, size: 30, color: Colors.red),
+                  ),
+                ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: DropdownButtonFormField<String>(
-                value: selectedCategory,
-                onChanged: (value) {
-                  setState(() {
-                    selectedCategory = value;
-                    _filterDrugs();
-                  });
-                },
-                items: ['All', ...categories].map((category) {
-                  return DropdownMenuItem<String>(
-                    value: category,
-                    child: Text(category),
-                  );
-                }).toList(),
-                icon: Icon(Icons.arrow_drop_down, size: 30, color: Colors.red),
-              ),
+            //end of filter by category
+
+            // Add filter by type dropdown
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Filter by Type',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child:
+                  // DropdownButtonFormField<String>(
+                  //   value: selectedType,
+                  //   onChanged: (value) {
+                  //     setState(() {
+                  //       selectedType = value;
+                  //       _filterDrugsByType();
+                  //     });
+                  //   },
+                  //   items: ['All', ...types].map((type) {
+                  //     return DropdownMenuItem<String>(
+                  //       value: type,
+                  //       child: Text(type),
+                  //     );
+                  //   }).toList(),
+                  //   icon: Icon(Icons.arrow_drop_down, size: 30, color: Colors.red),
+                  // ),
+                  // Update the items for "Filter by Types" dropdown based on the updated types list
+                  DropdownButtonFormField<String>(
+                    value: selectedType,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedType = value;
+                        _filterDrugsByType();
+                      });
+                    },
+                    items: ['All', ...types].map((type) {
+                      return DropdownMenuItem<String>(
+                        value: type,
+                        child: Text(type),
+                      );
+                    }).toList(),
+                    icon: Icon(Icons.arrow_drop_down, size: 30, color: Colors.red),
+                  ),
+                ),
+              ],
             ),
+            //end of filter by type
+
 
             Expanded(
               child: allDrugs.isEmpty
@@ -223,14 +336,16 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
                 child: CircularProgressIndicator(),
               )
                   : ListView.separated(
-                itemCount: displayedDrugs.length,
+               // itemCount: displayedDrugs.length,
+                itemCount: filteredDrugs.length,
                 separatorBuilder: (BuildContext context, int index) {
                   return Divider(
                     color: Colors.grey,
                   );
                 },
                 itemBuilder: (context, index) {
-                  final drug = displayedDrugs[index];
+                  //final drug = displayedDrugs[index];
+                  final drug = filteredDrugs[index];
                   return ListTile(
                     title: Text(
                       drug.name,
