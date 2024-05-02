@@ -3,10 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/drug_model.dart';
-import '../data/hitory_provider.dart';
 import '../ui/drugs_detail.dart';
 
 //this code is copy of drug list and it added filter function from Category
