@@ -4,10 +4,12 @@ A testing app to work with json and local storage like custom dictionary dapp
 
 Error in this 
 =============
-LateInitialization error when tapping drug detail screen for first time of application open
+- LateInitialization error when tapping drug detail screen for first time of application open --solved
 
-Favorite screen and History screen has not been initialized for the first time 
-
+- Favorite screen and History screen has not been initialized for the first time
+- history provider is not saved list after closing app 
+- to edit JSON data 
+- Planned to add filter functions 
 
 ## Getting Started
 

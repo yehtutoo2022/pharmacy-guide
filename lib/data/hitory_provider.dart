@@ -24,10 +24,10 @@ class HistoryProvider with ChangeNotifier {
     }
   }
 
-  void _saveHistory() {
+  Future<void> _saveHistory() async {
     List<String> historyJsonList =
     _history.map((drug) => jsonEncode(drug.toJson())).toList();
-    _prefs.setStringList(_historyKey, historyJsonList);
+    await _prefs.setStringList(_historyKey, historyJsonList);
   }
 
   void addToHistory(Drug drug) {
@@ -35,7 +35,7 @@ class HistoryProvider with ChangeNotifier {
     if (!_history.contains(drug)) {
       // Add the drug to the history list
       _history.add(drug);
-      _saveHistory();
+      _saveHistory(); // Save the updated history
       notifyListeners();
     }
   }
@@ -43,14 +43,13 @@ class HistoryProvider with ChangeNotifier {
   void removeFromHistory(Drug drug) {
     // Remove the drug from the history list
     _history.remove(drug);
-    _saveHistory();
+    _saveHistory(); // Save the updated history
     notifyListeners();
   }
 
   void clearAllHistory() {
     _history.clear(); // Remove all drugs from the history list
-    _saveHistory(); // Save the updated list to SharedPreferences
+    _saveHistory(); // Save the updated history
     notifyListeners(); // Notify listeners about the change
   }
-
 }

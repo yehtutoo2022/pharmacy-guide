@@ -176,9 +176,15 @@ class _DrugsListScreenState extends State<DrugsListScreen> {
                       drug.name,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Pyidaungsu',
                       ),
                     ),
-                    subtitle: Text('Category: ${drug.category}'),
+                    subtitle: Text(
+                      'Category: ${drug.category}',
+                      style: TextStyle(
+                        fontFamily: 'Pyidaungsu',
+                      ),
+                    ),
                     onTap: () {
                       Navigator.push(
                         context,

@@ -10,7 +10,6 @@ class FavoriteDrugListScreen extends StatelessWidget {
     return Consumer<FavoriteDrugProvider>(
       builder: (context, favoriteDrugProvider, _) {
         final favoriteDrugs = favoriteDrugProvider.favoriteDrugs;
-
         void _showClearAllConfirmationDialog(BuildContext context) {
           showDialog(
             context: context,
@@ -64,7 +63,6 @@ class FavoriteDrugListScreen extends StatelessWidget {
                 trailing: IconButton(
                   icon: Icon(Icons.remove_circle),
                   onPressed: () {
-                    // Remove the drug from favorites when the icon button is pressed
                     favoriteDrugProvider.toggleFavorite(drug);
                   },
                 ),
