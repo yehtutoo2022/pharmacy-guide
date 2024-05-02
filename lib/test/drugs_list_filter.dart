@@ -3,21 +3,32 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/drug_model.dart';
-import 'drugs_detail.dart';
+import '../data/hitory_provider.dart';
+import '../ui/drugs_detail.dart';
 
-class DrugsListScreen extends StatefulWidget {
+//this code is copy of drug list and it added filter function from Category
+
+class DrugsListFilter extends StatefulWidget {
   @override
-  _DrugsListScreenState createState() => _DrugsListScreenState();
+  _DrugsListFilterState createState() => _DrugsListFilterState();
 }
 
-class _DrugsListScreenState extends State<DrugsListScreen> {
+class _DrugsListFilterState extends State<DrugsListFilter> {
   late List<Drug> allDrugs;
   bool isFirstTime = true;
 
   List<dynamic> displayedDrugs = [];
   TextEditingController searchController = TextEditingController();
+
+  // Define list of available categories
+  List<String> categories = [];
+
+  // Define selected filter criteria
+  // String? selectedCategory;
+  String? selectedCategory = 'All';
 
   @override
   void initState() {
@@ -41,6 +52,10 @@ class _DrugsListScreenState extends State<DrugsListScreen> {
         allDrugs = (json.decode(jsonData) as List).map((item) => Drug.fromJson(item)).toList();
         displayedDrugs = List.from(allDrugs);
       });
+
+      // Get unique categories from all drugs
+      categories = allDrugs.map((drug) => drug.category).toSet().toList();
+
     } else {
       if (isFirstTime) {
         // Show dialog for the first time to ask user to download
@@ -111,6 +126,23 @@ class _DrugsListScreenState extends State<DrugsListScreen> {
     }
   }
 
+  //filter function of category
+  void _filterDrugs() {
+    if (selectedCategory == null || selectedCategory == 'All') {
+      // If no category is selected or 'All' is selected, display all drugs
+      setState(() {
+        displayedDrugs = List.from(allDrugs);
+      });
+    } else {
+      // Filter drugs based on the selected category
+      setState(() {
+        displayedDrugs = allDrugs
+            .where((drug) => drug.category == selectedCategory)
+            .toList();
+      });
+    }
+  }
+
   void _searchDrugs(String query) {
     if (query.isEmpty) {
       // If the search query is empty, display all drugs
@@ -157,6 +189,36 @@ class _DrugsListScreenState extends State<DrugsListScreen> {
                 ),
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Filter by Category',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: DropdownButtonFormField<String>(
+                value: selectedCategory,
+                onChanged: (value) {
+                  setState(() {
+                    selectedCategory = value;
+                    _filterDrugs();
+                  });
+                },
+                items: ['All', ...categories].map((category) {
+                  return DropdownMenuItem<String>(
+                    value: category,
+                    child: Text(category),
+                  );
+                }).toList(),
+                icon: Icon(Icons.arrow_drop_down, size: 30, color: Colors.red),
+              ),
+            ),
+
             Expanded(
               child: allDrugs.isEmpty
                   ? Center(

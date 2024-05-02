@@ -5,6 +5,8 @@ import '../data/hitory_provider.dart';
 import 'drugs_detail.dart';
 
 class HistoryScreen extends StatelessWidget {
+  const HistoryScreen({super.key});
+
 
   void _clearAllHistory(BuildContext context) {
     // Show confirmation dialog before clearing all history items

@@ -21,10 +21,14 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
   @override
   void initState() {
     super.initState();
-    favoriteProvider = Provider.of<FavoriteDrugProvider>(context, listen: false);
-    isFavorite = favoriteProvider.isDrugFavorite(widget.drug);
-    historyProvider = Provider.of<HistoryProvider>(context, listen: false);
-    historyProvider.addToHistory(widget.drug);
+    Future.delayed(Duration.zero, () {
+      favoriteProvider = Provider.of<FavoriteDrugProvider>(context, listen: false);
+      historyProvider = Provider.of<HistoryProvider>(context, listen: false);
+      isFavorite = favoriteProvider.isDrugFavorite(widget.drug);
+
+      // Add the drug to the history provider
+      historyProvider.addToHistory(widget.drug);
+    });
   }
 
   void toggleFavorite() {
@@ -78,53 +82,151 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
               ),
             ),
             SizedBox(height: 24),
-            Text(
-              'Category',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+            //to correct
+            //category
+            Row(
+              children: [
+                Icon(Icons.category),
+                SizedBox(width: 8),
+                Text(
+                  'Category - အုပ်စု',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 8),
+            //category
             Text(
               widget.drug.category,
               style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 24),
-            Text(
-              'Ingredients',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+            //ingredients
+            Row(
+              children: [
+                Center(
+                  child: Icon(Icons.local_florist),
+                ),
+                SizedBox(width: 8),
+                Center(
+                  child: Text(
+                    'Ingredients - ပါဝင်သောဆေးများ',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 8),
+            //ingredients
             Text(
               widget.drug.ingredients,
               style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 24),
-            Text(
-              'Type',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+            //type
+            Row(
+              children: [
+                Center(
+                  child: Icon(Icons.category),
+                ),
+                SizedBox(width: 8),
+                Center(
+                  child: Text(
+                    'Type - အမျိုးအစား',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 8),
+            //type
             Text(
               widget.drug.type,
               style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 24),
-            Text(
-              'Price',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+            //indication
+            Row(
+              children: [
+                Center(
+                  child: Icon(Icons.format_indent_increase),
+                ),
+                SizedBox(width: 8),
+                Center(
+                  child: Text(
+                    'Indication - ဆေးအသုံး',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 8),
+            //indication
+            Text(
+              widget.drug.indication,
+              style: TextStyle(
+                fontSize: 16,
+              ),
+              textAlign: TextAlign.justify,
+            ),
+            SizedBox(height: 24),
+            //madeIn
+            Row(
+              children: [
+                Center(
+                  child: Icon(Icons.location_pin),
+                ),
+                SizedBox(width: 8),
+                Center(
+                  child: Text(
+                    'Made In - တင်သွင်းသည့်နိုင်ငံ',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 8),
+            //madeIn
+            Text(
+              widget.drug.madeIn,
+              style: TextStyle(fontSize: 16),
+            ),
+            SizedBox(height: 24),
+            //price
+            Row(
+              children: [
+                Center(
+                  child: Icon(Icons.attach_money),
+                ),
+                SizedBox(width: 8),
+                Center(
+                  child: Text(
+                    'Price - စျေးနှုန်း',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 8),
+            //price
             Text(
               '\$${widget.drug.price}',
               style: TextStyle(fontSize: 16),
@@ -135,3 +237,6 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
     );
   }
 }
+
+
+
