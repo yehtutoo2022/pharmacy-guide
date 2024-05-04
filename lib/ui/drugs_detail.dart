@@ -15,7 +15,7 @@ class DrugDetailScreen extends StatefulWidget {
 
 class _DrugDetailScreenState extends State<DrugDetailScreen> {
   late FavoriteDrugProvider favoriteProvider;
-  late HistoryProvider historyProvider;
+
   bool isFavorite = false;
 
   @override
@@ -23,11 +23,8 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
     super.initState();
     Future.delayed(Duration.zero, () {
       favoriteProvider = Provider.of<FavoriteDrugProvider>(context, listen: false);
-      historyProvider = Provider.of<HistoryProvider>(context, listen: false);
       isFavorite = favoriteProvider.isDrugFavorite(widget.drug);
 
-      // Add the drug to the history provider
-      historyProvider.addToHistory(widget.drug);
     });
   }
 
@@ -82,7 +79,7 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
               ),
             ),
             SizedBox(height: 24),
-            //to correct
+
             //category
             Row(
               children: [
@@ -93,6 +90,7 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
+                    color: Colors.blueAccent
                   ),
                 ),
               ],
@@ -103,7 +101,8 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
               widget.drug.category,
               style: TextStyle(fontSize: 16),
             ),
-            SizedBox(height: 24),
+            SizedBox(height: 34),
+
             //ingredients
             Row(
               children: [
@@ -117,6 +116,7 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
+                        color: Colors.blueAccent
                     ),
                   ),
                 ),
@@ -128,7 +128,7 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
               widget.drug.ingredients,
               style: TextStyle(fontSize: 16),
             ),
-            SizedBox(height: 24),
+            SizedBox(height: 34),
             //type
             Row(
               children: [
@@ -142,6 +142,7 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
+                        color: Colors.blueAccent
                     ),
                   ),
                 ),
@@ -153,7 +154,7 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
               widget.drug.type,
               style: TextStyle(fontSize: 16),
             ),
-            SizedBox(height: 24),
+            SizedBox(height: 34),
             //indication
             Row(
               children: [
@@ -167,6 +168,7 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
+                        color: Colors.blueAccent
                     ),
                   ),
                 ),
@@ -181,7 +183,7 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
               ),
               textAlign: TextAlign.justify,
             ),
-            SizedBox(height: 24),
+            SizedBox(height: 34),
             //madeIn
             Row(
               children: [
@@ -195,6 +197,7 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
+                        color: Colors.blueAccent
                     ),
                   ),
                 ),
@@ -206,7 +209,7 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
               widget.drug.madeIn,
               style: TextStyle(fontSize: 16),
             ),
-            SizedBox(height: 24),
+            SizedBox(height: 34),
             //price
             Row(
               children: [
@@ -220,6 +223,7 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
+                        color: Colors.blueAccent
                     ),
                   ),
                 ),

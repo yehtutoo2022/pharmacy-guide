@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/drug_model.dart';
+import '../data/hitory_provider.dart';
 import 'drugs_detail.dart';
 
 class DrugsListScreen extends StatefulWidget {
@@ -22,9 +24,10 @@ class _DrugsListScreenState extends State<DrugsListScreen> {
   @override
   void initState() {
     super.initState();
-    allDrugs = []; // Initialize allDrugs as an empty list
+    allDrugs = [];
     loadData();
   }
+
 
   Future<void> loadData() async {
     // Initialize _prefs first
@@ -129,6 +132,8 @@ class _DrugsListScreenState extends State<DrugsListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final HistoryProvider historyProvider = Provider.of<HistoryProvider>(context, listen: false);
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -186,6 +191,7 @@ class _DrugsListScreenState extends State<DrugsListScreen> {
                       ),
                     ),
                     onTap: () {
+                      historyProvider.addToHistory(drug);
                       Navigator.push(
                         context,
                         MaterialPageRoute(

@@ -21,9 +21,9 @@ class _HomeMenuState extends State<HomeMenu> {
     super.initState();
     _screens = [
       DrugsListScreen(),
-      FavoriteDrugListScreen(),
-      HistoryScreen(),
-      DrugsListFilter(),
+      const FavoriteDrugListScreen(),
+      const HistoryScreen(),
+      const DrugsListFilter(),
 
     ];
   }

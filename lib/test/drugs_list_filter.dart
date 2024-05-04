@@ -3,13 +3,17 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/drug_model.dart';
+import '../data/hitory_provider.dart';
 import '../ui/drugs_detail.dart';
 
 //this code is copy of drug list and it added filter function from Category
 
 class DrugsListFilter extends StatefulWidget {
+  const DrugsListFilter({super.key});
+
   @override
   _DrugsListFilterState createState() => _DrugsListFilterState();
 }
@@ -29,7 +33,6 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
   List<String> types = [];
 
   String? selectedCategory = 'All';
-  // Define selected filter criteria for type
   String? selectedType = 'All';
 
   @override
@@ -211,6 +214,7 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
 
   @override
   Widget build(BuildContext context) {
+    final HistoryProvider historyProvider = Provider.of<HistoryProvider>(context, listen: false);
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -361,6 +365,8 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
                       ),
                     ),
                     onTap: () {
+                      //if tap on drug name, it will save to HistoryProvider
+                      historyProvider.addToHistory(drug);
                       Navigator.push(
                         context,
                         MaterialPageRoute(

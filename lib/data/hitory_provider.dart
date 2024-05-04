@@ -1,55 +1,61 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../data/drug_model.dart';
+import 'drug_model.dart';
+
+//chat GPT is not useful for complex error solving
+//I found error in saving drug history with provider, it show favorite drug provider
+//But, it cannot write correctly based on favorite drug provider
+//So, I copy favorite drug provider and rename to history provider and other related methods
+//Finally, I solved my problem
+//chat GPT could not
 
 class HistoryProvider with ChangeNotifier {
-  List<Drug> _history = [];
-  late SharedPreferences _prefs;
-  static const String _historyKey = 'history';
-
-  List<Drug> get history => _history;
+  Set<Drug> _history = {};
+  // A Set in Dart only allows unique values, so duplicates won't be added automatically.
+  SharedPreferences? _prefs;
 
   HistoryProvider() {
     _loadHistory();
   }
 
+  List<Drug> get history => _history.toList();
+
+
+    void addToHistory(Drug drug) {
+    if (!_history.contains(drug)) {
+      _history.add(drug);
+      _saveHistory();
+      notifyListeners();
+    }
+  }
+
+  bool isHistory(Drug drug) {
+    return _history.contains(drug);
+  }
+
   Future<void> _loadHistory() async {
     _prefs = await SharedPreferences.getInstance();
-    final String? historyJson = _prefs.getString(_historyKey);
+    final List<String>? historyJson = _prefs?.getStringList('history');
     if (historyJson != null) {
-      List<dynamic> historyList = jsonDecode(historyJson);
-      _history = historyList.map((json) => Drug.fromJson(json)).toList();
-      notifyListeners();
+      _history = historyJson.map((json) => Drug.fromJson(jsonDecode(json))).toSet();
     }
   }
 
-  Future<void> _saveHistory() async {
-    List<String> historyJsonList =
-    _history.map((drug) => jsonEncode(drug.toJson())).toList();
-    await _prefs.setStringList(_historyKey, historyJsonList);
-  }
-
-  void addToHistory(Drug drug) {
-    // Check if the drug is already in the history
-    if (!_history.contains(drug)) {
-      // Add the drug to the history list
-      _history.add(drug);
-      _saveHistory(); // Save the updated history
-      notifyListeners();
-    }
+  void _saveHistory() {
+    final List<String> historyJson = _history.map((drug) => jsonEncode(drug.toJson())).toList();
+    _prefs?.setStringList('history', historyJson);
   }
 
   void removeFromHistory(Drug drug) {
-    // Remove the drug from the history list
     _history.remove(drug);
-    _saveHistory(); // Save the updated history
+    _saveHistory();
     notifyListeners();
   }
 
   void clearAllHistory() {
-    _history.clear(); // Remove all drugs from the history list
-    _saveHistory(); // Save the updated history
-    notifyListeners(); // Notify listeners about the change
+    _history.clear();
+    _saveHistory();
+    notifyListeners();
   }
 }

@@ -34,7 +34,7 @@ Future<void> main() async {
         ),
 
       ],
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 
@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
 
     return LocaleBuilder(
       builder: (locale) => MaterialApp(
-        title: 'Pharmacy',
+        title: 'Pharmacy Guide',
         localizationsDelegates: Locales.delegates,
         supportedLocales: Locales.supportedLocales,
         locale: locale,
