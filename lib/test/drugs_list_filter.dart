@@ -78,7 +78,7 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
   }
 
   void _updateTypesList(String selectedCategory) {
-    if (selectedCategory == null || selectedCategory == 'All') {
+    if (selectedCategory == 'All') {
       // If no category is selected or 'All' is selected, display all types
       setState(() {
         types = allDrugs.map((drug) => drug.type).toSet().toList();

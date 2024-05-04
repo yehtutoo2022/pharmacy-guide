@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../data/favorite_drug_provider.dart';
 import '../data/drug_model.dart';
-import '../data/hitory_provider.dart';
 
 class DrugDetailScreen extends StatefulWidget {
   final Drug drug;
