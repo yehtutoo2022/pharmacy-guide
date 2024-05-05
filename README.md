@@ -10,7 +10,7 @@ Error in this
 - to edit JSON data - add over 600 drugs 
 - Add category filter and type filter 
 - Type depend on Category 
-- 
+- add filter dialog - but faced error 
 
 ## Getting Started
 
