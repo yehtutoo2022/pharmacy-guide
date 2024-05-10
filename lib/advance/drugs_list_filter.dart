@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -5,12 +6,11 @@ import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vibration/vibration.dart';
 import '../data/drug_model.dart';
 import '../data/hitory_provider.dart';
 import '../ui/drugs_detail.dart';
-
-//this code is copy of drug list and it added filter function from Category
-
+//old corrected code
 class DrugsListFilter extends StatefulWidget {
   const DrugsListFilter({super.key});
 
@@ -21,9 +21,9 @@ class DrugsListFilter extends StatefulWidget {
 class _DrugsListFilterState extends State<DrugsListFilter> {
   late List<Drug> allDrugs;
   bool isFirstTime = true;
-  bool downloadingData = false; // Track downloading status
+  bool downloadingData = false;
+  double downloadingProgress = 0.0;
 
-  // Define a new list to store filtered drugs
   List<dynamic> filteredDrugs = [];
   List<dynamic> displayedDrugs = [];
   TextEditingController searchController = TextEditingController();
@@ -34,6 +34,8 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
   String? selectedCategory = 'All';
   String? selectedType = 'All';
 
+  bool searchDrugsByBrandName = true;
+
   @override
   void initState() {
     super.initState();
@@ -42,19 +44,37 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
     loadData();
   }
 
-  void _searchDrugs(String query) {
+  void _searchDrugsByBrandName(String query) {
     if (query.isEmpty) {
       // If the search query is empty, display all drugs
       setState(() {
-        // displayedDrugs = List.from(allDrugs);
         displayedDrugs = List.from(filteredDrugs);
       });
     } else {
       // Filter drugs based on the search query
       setState(() {
         displayedDrugs = filteredDrugs
-            .where(
-                (drug) => drug.name.toLowerCase().contains(query.toLowerCase()))
+            .where((drug) =>
+                   drug.name.toLowerCase().contains(query.toLowerCase())
+        )
+            .toList();
+      });
+    }
+  }
+
+  void _searchDrugsByGenericName(String query) {
+    if (query.isEmpty) {
+      // If the search query is empty, display all drugs
+      setState(() {
+        displayedDrugs = List.from(filteredDrugs);
+      });
+    } else {
+      // Filter drugs based on the search query
+      setState(() {
+        displayedDrugs = filteredDrugs
+            .where((drug) =>
+            drug.ingredients.toLowerCase().contains(query.toLowerCase())
+        )
             .toList();
       });
     }
@@ -79,7 +99,7 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
       });
     }
     //add to work search and filter
-    _searchDrugs(searchController.text);
+    _searchDrugsByBrandName(searchController.text);
   }
 
   void _filterDrugsByType() {
@@ -96,7 +116,7 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
       });
     }
     //add to work search and filter
-    _searchDrugs(searchController.text);
+    _searchDrugsByBrandName(searchController.text);
   }
 
   void _updateTypesList(String selectedCategory) {
@@ -149,6 +169,7 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
       types.sort((a, b) => a.compareTo(b));
     } else {
       if (isFirstTime) {
+        Vibration.vibrate(duration: 100);
         // Show dialog for the first time to ask user to download
         showDialog(
           context: context,
@@ -197,10 +218,15 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
             .map((item) => Drug.fromJson(item))
             .toList();
         displayedDrugs = List.from(allDrugs);
-        downloadingData =
-            false; // Set downloading status to false when finished
+        downloadingData = false; // Set downloading status to false when finished
       });
 
+      // Calculate progress percentage based on the received content length
+      final contentLength = response.headers['content-length'];
+      final totalBytes = contentLength == null ? 0 : int.parse(contentLength);
+      downloadingProgress = totalBytes > 0 ? response.bodyBytes.length / totalBytes : 0;
+
+      Vibration.vibrate(duration: 100);
       // Show dialog to indicate the data has been downloaded
       showDialog(
         context: context,
@@ -232,121 +258,32 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final HistoryProvider historyProvider =
-        Provider.of<HistoryProvider>(context, listen: false);
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Drugs List with Filter Function'),
-          actions: [
-            IconButton(
-              icon: Icon(Icons.filter_alt),
-              onPressed: () {
-                _showFilterDialog(); // Show the filter dialog when the filter icon is pressed
-              },
-            ),
-          ],
-        ),
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: searchController,
-                onChanged: _searchDrugs,
-                decoration: InputDecoration(
-                  hintText: 'Search drugs...',
-                  border: OutlineInputBorder(),
-                  suffixIcon: IconButton(
-                    icon: Icon(Icons.clear),
-                    onPressed: () {
-                      searchController.clear();
-                      _searchDrugs('');
-                    },
-                  ),
-                ),
-              ),
-            ),
-            if (downloadingData) // Show progress indicator if data is being downloaded
-              LinearProgressIndicator(
-                backgroundColor: Colors.grey[200], // Background color
-                valueColor: AlwaysStoppedAnimation<Color>(
-                    Colors.blue), // Color of the progress indicator
-                minHeight: 10, // Minimum height of the progress indicator
-                value:
-                    0.7, // Set to null to indicate an indeterminate progress indicator
-              ),
-            Expanded(
-              child: allDrugs.isEmpty
-                  ? Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : ListView.separated(
-                      itemCount: displayedDrugs.length,
-                      // itemCount: filteredDrugs.length,
-                      separatorBuilder: (BuildContext context, int index) {
-                        return Divider(
-                          color: Colors.grey,
-                        );
-                      },
-                      itemBuilder: (context, index) {
-                        final drug = displayedDrugs[index];
-                        // final drug = filteredDrugs[index];
-                        return ListTile(
-                          title: Text(
-                            drug.name,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Pyidaungsu',
-                            ),
-                          ),
-                          subtitle: Text(
-                            'Category: ${drug.category}',
-                            style: TextStyle(
-                              fontFamily: 'Pyidaungsu',
-                            ),
-                          ),
-                          onTap: () {
-                            //if tap on drug name, it will save to HistoryProvider
-                            historyProvider.addToHistory(drug);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    DrugDetailScreen(drug: drug),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    ),
-            ),
-          ],
-        ),
-      ),
-    );
+  Future <void> updateData() async {
+    // Trigger data download when the button is pressed
+    try {
+      await downloadData();
+    } catch (e) {
+      // Handle any errors that occur during data download
+      print('Error downloading data: $e');
+    }
   }
 
   void _showFilterDialog() {
+    Vibration.vibrate(duration: 100);
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             return AlertDialog(
-              title: Text('Filter Options'),
+              title: const Text('Filter Options'),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   //filter by category title
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8.0),
                     child: Text(
                       'Filter by Category',
                       style: TextStyle(
@@ -372,11 +309,11 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
                         value: category,
                         child: Text(
                           category,
-                          style: TextStyle(fontSize: 12),
+                          style: const TextStyle(fontSize: 12),
                         ),
                       );
                     }).toList(),
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.arrow_drop_down,
                       color: Colors.red,
                     ),
@@ -428,6 +365,161 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
           },
         );
       },
+    );
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    final HistoryProvider historyProvider = Provider.of<HistoryProvider>(context, listen: false);
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('MM Pharmacy Guide'),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.filter_alt),
+              color: Colors.red,
+              onPressed: () {
+                _showFilterDialog();
+                // Show the filter dialog when the filter icon is pressed
+              },
+            ),
+            // PopupMenuButton<String>(
+            //   itemBuilder: (BuildContext context) => [
+            //     const PopupMenuItem(
+            //       value: 'update',
+            //       child: ListTile(
+            //         leading: Icon(Icons.browser_updated),
+            //         title: Text('Update Data'),
+            //       ),
+            //     ),
+            //   ],
+            //   onSelected: (String value) {
+            //     if (value == 'update') {
+            //       updateData();
+            //      }
+            //   },
+            // ),
+          ],
+        ),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: searchController,
+                // this can use two search methods
+                onChanged: (query) {
+                  if (searchDrugsByBrandName) {
+                    _searchDrugsByBrandName(query);
+                  } else {
+                    _searchDrugsByGenericName(query);
+                  }
+                },
+                decoration: InputDecoration(
+                  hintText: 'Search drugs',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(18.0), // Adjust the radius as needed
+                  ),
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.clear_all),
+                    //this can use two search methods
+                    onPressed: () {
+                      searchController.clear();
+                      if (searchDrugsByBrandName) {
+                        _searchDrugsByBrandName('');
+                      } else {
+                        _searchDrugsByGenericName('');
+                      }
+                    },
+                  ),
+                ),
+
+              ),
+            ),
+            //this row is for user switching
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  searchDrugsByBrandName ? 'Search by Brand Name' : 'Search by Generic Name',
+                  style: const TextStyle(fontSize: 16),
+                ),
+                Switch(
+                  value: searchDrugsByBrandName,
+                  onChanged: (value) {
+                    setState(() {
+                      searchDrugsByBrandName = value;
+                      searchController.clear();
+                    });
+                  },
+                  activeColor: Colors.grey,
+                  inactiveThumbColor: Colors.grey,
+                  inactiveTrackColor: Colors.grey[300],
+                  activeTrackColor: Colors.grey[200],
+                ),
+              ],
+            ),
+            if (downloadingData) // Show progress indicator if data is being downloaded
+              LinearProgressIndicator(
+                backgroundColor: Colors.blue[100], // Background color
+                valueColor: const AlwaysStoppedAnimation<Color>(Colors.blue), // Color of the progress indicator
+                minHeight: 10, // Minimum height of the progress indicator
+                value: downloadingProgress, // Set to null to indicate an indeterminate progress indicator
+              ),
+            Expanded(
+              child: allDrugs.isEmpty
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : ListView.separated(
+                      itemCount: displayedDrugs.length,
+                      // itemCount: filteredDrugs.length,
+                      separatorBuilder: (BuildContext context, int index) {
+                        return const Divider(
+                          color: Colors.grey,
+                        );
+                      },
+                      itemBuilder: (context, index) {
+                        final drug = displayedDrugs[index];
+                        // final drug = filteredDrugs[index];
+                        return ListTile(
+                          title: Text(
+                            drug.name,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Pyidaungsu',
+                            ),
+                          ),
+                          subtitle: Text(
+                           // 'Ingredients: ${drug.ingredients}',
+                            drug.ingredients,
+                            style: const TextStyle(
+                              fontFamily: 'Pyidaungsu',
+                            ),
+                          ),
+                          onTap: () {
+                            //if tap on drug name, it will save to HistoryProvider
+                            historyProvider.addToHistory(drug);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    DrugDetailScreen(drug: drug),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -32,27 +32,45 @@ Future<void> main() async {
         ChangeNotifierProvider(
           create: (context) => HistoryProvider(),
         ),
-
       ],
-      child: const MyApp(),
+      child: MyApp(),
     ),
   );
 
 }
 
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MyApp extends StatefulWidget {
+  //const MyApp({Key? key}) : super(key: key);
+  static void setTheme(BuildContext context, ThemeData themeData) {
+    final _MyAppState state = context.findAncestorStateOfType<_MyAppState>()!;
+    state.setThemeData(themeData);
+  }
+
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  ThemeData _themeData = ThemeData.light();
+
+  void setThemeData(ThemeData themeData) {
+    setState(() {
+      _themeData = themeData;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
 
     return LocaleBuilder(
       builder: (locale) => MaterialApp(
-        title: 'Pharmacy Guide',
+        title: 'MM Pharmacy Guide',
         localizationsDelegates: Locales.delegates,
         supportedLocales: Locales.supportedLocales,
         locale: locale,
+        theme: _themeData,
         home: const HomeMenu(),
         debugShowCheckedModeBanner: false,
       ),

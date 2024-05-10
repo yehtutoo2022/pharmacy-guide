@@ -140,7 +140,7 @@ class _DrugsListScreenState extends State<DrugsListScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Drugs List'),
+          title: const Text('Drugs List'),
         ),
         body: Column(
           children: [
@@ -151,9 +151,9 @@ class _DrugsListScreenState extends State<DrugsListScreen> {
                 onChanged: _searchDrugs,
                 decoration: InputDecoration(
                   hintText: 'Search drugs...',
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   suffixIcon: IconButton(
-                    icon: Icon(Icons.clear),
+                    icon: const Icon(Icons.clear),
                     onPressed: () {
                       searchController.clear();
                       _searchDrugs('');
@@ -164,13 +164,13 @@ class _DrugsListScreenState extends State<DrugsListScreen> {
             ),
             Expanded(
               child: allDrugs.isEmpty
-                  ? Center(
+                  ? const Center(
                 child: CircularProgressIndicator(),
               )
                   : ListView.separated(
                 itemCount: displayedDrugs.length,
                 separatorBuilder: (BuildContext context, int index) {
-                  return Divider(
+                  return const Divider(
                     color: Colors.grey,
                   );
                 },
@@ -179,14 +179,14 @@ class _DrugsListScreenState extends State<DrugsListScreen> {
                   return ListTile(
                     title: Text(
                       drug.name,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Pyidaungsu',
                       ),
                     ),
                     subtitle: Text(
                       'Category: ${drug.category}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'Pyidaungsu',
                       ),
                     ),

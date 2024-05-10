@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pharmacy_guide2/test/drugs_list_filter.dart';
+import 'package:pharmacy_guide2/setting/settings.dart';
 import 'package:pharmacy_guide2/ui/drugs_history.dart';
 import 'package:pharmacy_guide2/ui/drugs_list.dart';
 import 'package:pharmacy_guide2/ui/favorite_list.dart';
+
+import 'advance/drugs_list_filter.dart';
 
 class HomeMenu extends StatefulWidget {
   const HomeMenu({super.key});
@@ -20,11 +22,11 @@ class _HomeMenuState extends State<HomeMenu> {
   void initState() {
     super.initState();
     _screens = [
-      DrugsListScreen(),
+      const DrugsListFilter(),
+      //DrugsListScreen(),
       const FavoriteDrugListScreen(),
       const HistoryScreen(),
-      const DrugsListFilter(),
-
+      SettingsScreen(),
     ];
   }
 

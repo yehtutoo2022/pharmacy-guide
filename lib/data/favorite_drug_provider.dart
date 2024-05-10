@@ -48,4 +48,10 @@ class FavoriteDrugProvider with ChangeNotifier {
     _saveFavoriteDrugs();
     notifyListeners();
   }
+
+  void deleteSelectedDrugs (Set<Drug> drugs) {
+    _favoriteDrugs.removeAll(drugs);
+    _saveFavoriteDrugs();
+    notifyListeners();
+  }
 }

@@ -45,6 +45,7 @@ dependencies:
   flutter_native_splash: ^2.2.19
   flutter_cache_manager: ^3.0.0
   cached_network_image: ^3.3.1
+  vibration: ^1.7.2
   firebase_core: ^2.24.2
   firebase_analytics: ^10.7.4
 
@@ -79,6 +80,7 @@ flutter:
   assets:
     - assets/locales/en.json
     - assets/locales/my.json
+    - assets/about_app.txt
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

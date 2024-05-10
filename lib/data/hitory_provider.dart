@@ -58,4 +58,10 @@ class HistoryProvider with ChangeNotifier {
     _saveHistory();
     notifyListeners();
   }
+
+  void deleteSelectedDrugs (Set<Drug> drugs) {
+    _history.removeAll(drugs);
+    _saveHistory();
+    notifyListeners();
+  }
 }

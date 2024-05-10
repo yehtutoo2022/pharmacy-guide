@@ -8,9 +8,9 @@ Error in this
 - Favorite screen has not been initialized for the first time
 - history provider is not saved list after closing app - solved 
 - to edit JSON data - add over 600 drugs 
-- Add category filter and type filter 
-- Type depend on Category 
-- add filter dialog - but faced error 
+- Add category filter and type filter  - added 
+- Type depend on Category  - added 
+- added Update function 
 
 ## Getting Started
 

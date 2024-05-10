@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:vibration/vibration.dart';
 import '../data/favorite_drug_provider.dart';
 import '../data/drug_model.dart';
 
 class DrugDetailScreen extends StatefulWidget {
   final Drug drug;
 
-  DrugDetailScreen({required this.drug});
+  DrugDetailScreen({super.key, required this.drug});
 
   @override
   State<DrugDetailScreen> createState() => _DrugDetailScreenState();
@@ -28,10 +29,19 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
   }
 
   void toggleFavorite() {
+    Vibration.vibrate(duration: 100);
+
     setState(() {
       isFavorite = !isFavorite;
     });
     favoriteProvider.toggleFavorite(widget.drug);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(isFavorite ? 'Added to favorites' : 'Remove from favorites'),
+        duration: const Duration(seconds: 2),
+      ),
+    );
   }
 
   @override
@@ -57,30 +67,30 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
 
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
-                color: Colors.grey[200],
+                color: Colors.blue[200],
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: Center(
                 child: Text(
                   widget.drug.name,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
 
             //category
-            Row(
+            const Row(
               children: [
                 Icon(Icons.category),
                 SizedBox(width: 8),
@@ -94,16 +104,16 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             //category
             Text(
               widget.drug.category,
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
-            SizedBox(height: 34),
+            const SizedBox(height: 34),
 
             //ingredients
-            Row(
+            const Row(
               children: [
                 Center(
                   child: Icon(Icons.local_florist),
@@ -121,15 +131,15 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             //ingredients
             Text(
               widget.drug.ingredients,
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
-            SizedBox(height: 34),
+            const SizedBox(height: 34),
             //type
-            Row(
+            const Row(
               children: [
                 Center(
                   child: Icon(Icons.category),
@@ -147,15 +157,15 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             //type
             Text(
               widget.drug.type,
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
-            SizedBox(height: 34),
+            const SizedBox(height: 34),
             //indication
-            Row(
+            const Row(
               children: [
                 Center(
                   child: Icon(Icons.format_indent_increase),
@@ -173,18 +183,18 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             //indication
             Text(
               widget.drug.indication,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
               ),
               textAlign: TextAlign.justify,
             ),
-            SizedBox(height: 34),
+            const SizedBox(height: 34),
             //madeIn
-            Row(
+            const Row(
               children: [
                 Center(
                   child: Icon(Icons.location_pin),
@@ -192,7 +202,7 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
                 SizedBox(width: 8),
                 Center(
                   child: Text(
-                    'Made In - တင်သွင်းသည့်နိုင်ငံ',
+                    'Made In - ထုတ်လုပ်သည့်နိုင်ငံ',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -202,15 +212,15 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             //madeIn
             Text(
               widget.drug.madeIn,
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
-            SizedBox(height: 34),
+            const SizedBox(height: 34),
             //price
-            Row(
+            const Row(
               children: [
                 Center(
                   child: Icon(Icons.attach_money),
@@ -228,11 +238,11 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             //price
             Text(
               '\$${widget.drug.price}',
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
           ],
         ),
