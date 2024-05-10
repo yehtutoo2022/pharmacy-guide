@@ -30,7 +30,7 @@ class _UpdateDataScreenState extends State<UpdateDataScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Update Data'),
+        title: const Text('Update Database'),
       ),
       body: Center(
         child: Column(

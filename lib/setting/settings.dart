@@ -8,12 +8,12 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: const Text('Settings'),
       ),
       body: ListView(
         children: <Widget>[
           ListTile(
-            title: const Text('Update Data'),
+            title: const Text('Update Database'),
             onTap: () {
               // Navigate to theme settings screen
               Navigator.push(
@@ -56,7 +56,7 @@ class AboutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('About App'),
+        title: const Text('About App'),
       ),
       body: FutureBuilder(
         future: _loadAboutText(), // Load the text file content
@@ -66,11 +66,11 @@ class AboutScreen extends StatelessWidget {
             return SingleChildScrollView(
               child: Center(
                 child: Padding(
-                  padding: EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: Text(
                     snapshot.data.toString(),
                     textAlign: TextAlign.justify,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16.0,
                     ),
                   ),
@@ -79,7 +79,7 @@ class AboutScreen extends StatelessWidget {
             );
           } else {
             // Display a loading indicator while data is being fetched
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
         },
       ),
@@ -99,9 +99,9 @@ class TermsOfServiceScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Terms of Service'),
+        title: const Text('Terms of Service'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('Terms of Service'),
       ),
     );
@@ -114,9 +114,9 @@ class PrivacyPolicyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Privacy Policy'),
+        title: const Text('Privacy Policy'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('Privacy Policy'),
       ),
     );

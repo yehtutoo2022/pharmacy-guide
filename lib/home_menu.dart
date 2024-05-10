@@ -51,7 +51,7 @@ class _HomeMenuState extends State<HomeMenu> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.history),
-            label: 'Tool',
+            label: 'History',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
