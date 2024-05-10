@@ -62,19 +62,30 @@ class AboutScreen extends StatelessWidget {
         future: _loadAboutText(), // Load the text file content
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            
             return SingleChildScrollView(
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Text(
-                    snapshot.data.toString(),
-                    textAlign: TextAlign.justify,
-                    style: const TextStyle(
-                      fontSize: 16.0,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Image widget
+                  Image.asset(
+                    'assets/images/mm_pharmacy_guide_logo.png', // Replace 'your_image.png' with your actual image asset path
+                    height: 200, // Adjust height as needed
+                    width: 200, // Adjust width as needed
+                  ),
+                  // Padding between image and text
+                  SizedBox(height: 20),
+                  // Text widget
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Text(
+                      snapshot.data.toString(),
+                      textAlign: TextAlign.justify,
+                      style: const TextStyle(
+                        fontSize: 16.0,
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
             );
           } else {
