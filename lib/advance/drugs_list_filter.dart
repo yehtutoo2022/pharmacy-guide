@@ -175,9 +175,9 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text('Download Data'),
+              title: const Text('Download Database'),
               content: const Text(
-                  'Do you want to download the data from the internet?'),
+                  'Do you want to download the database from the internet?'),
               actions: [
                 TextButton(
                   onPressed: () async {
@@ -201,12 +201,20 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
   }
 
   Future<void> downloadData() async {
+    //git show Burmese font correctly
+
+    String githubRawUrl = 'https://raw.githubusercontent.com/yehtutoo2022/pharmacy-guide/master/assets/drugs_data.json';
+
+    //googleDrive link is not show Burmese font Correctly
+   // String googleDriveLink = 'https://drive.google.com/uc?export=download&id=1kGZWVeMAPdqRhWWsrvqPg1lYUUm7TnHz';
     setState(() {
       downloadingData = true; // Set downloading status to true
     });
 
-    final response = await http.get(Uri.parse(
-        'https://drive.google.com/uc?export=download&id=1kGZWVeMAPdqRhWWsrvqPg1lYUUm7TnHz'));
+    final response = await http.get(
+        Uri.parse(githubRawUrl),
+     // Uri.parse(googleDriveLink),
+    );
 
     if (response.statusCode == 200) {
       final file = File(
@@ -232,9 +240,9 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Data Downloaded'),
+            title: const Text('Database Downloaded'),
             content:
-                const Text('The data has been downloaded from the internet.'),
+                const Text('The database has been downloaded from the internet.'),
             actions: [
               TextButton(
                 onPressed: () {

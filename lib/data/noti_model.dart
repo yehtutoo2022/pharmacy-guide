@@ -29,14 +29,7 @@ class Noti {
       "Noti Content": notiContent,
       "Image Url": imageUrl
     };
-    return jsonEncode(jsonMap, toEncodable: utf8Encode);
+    return jsonEncode(jsonMap);
   }
 
-  // Utility function to encode non-UTF-8 characters
-  dynamic utf8Encode(dynamic object) {
-    if (object is String) {
-      return utf8.encode(object);
-    }
-    return object;
-  }
 }
