@@ -6,96 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../data/noti_model.dart';
 import 'notification_detail.dart';
 
-// class NotificationScreen extends StatefulWidget {
-//   @override
-//   _NotificationScreenState createState() => _NotificationScreenState();
-// }
-//
-// class _NotificationScreenState extends State<NotificationScreen> {
-//  // List<Noti> notifications = [];
-//   Future<List<Noti>> _notificationFuture;
-//   @override
-//   void initState() {
-//     super.initState();
-//   //  loadNotifications();
-//     _notificationFuture = loadNotifications();
-//   }
-//
-//   // Future<void> loadNotifications() async {
-//   //
-//   //   String googleDriveLink = 'https://drive.google.com/uc?id=1D5ObejHN3g1I0ORk3WgrO2cRzJ_dD4qM';
-//   //
-//   //   try {
-//   //     // Make HTTP GET request to fetch the file contents
-//   //     final response = await http.get(Uri.parse(googleDriveLink));
-//   //
-//   //     // Check if the request was successful
-//   //     if (response.statusCode == 200) {
-//   //       // Parse JSON data
-//   //       List<dynamic> jsonList = jsonDecode(response.body);
-//   //
-//   //       setState(() {
-//   //         // Create Noti objects from JSON data
-//   //         notifications = jsonList.map((e) => Noti.fromJson(e)).toList();
-//   //       });
-//   //     } else {
-//   //       // Handle error if request fails
-//   //       throw Exception('Failed to load notifications');
-//   //     }
-//   //   } catch (e) {
-//   //     // Handle exception
-//   //     print('Error loading notifications: $e');
-//   //   }
-//   // }
-//
-//   Future<List<Noti>> loadNotifications() async {
-//     String googleDriveLink = 'https://drive.google.com/uc?id=1D5ObejHN3g1I0ORk3WgrO2cRzJ_dD4qM';
-//
-//     try {
-//       final response = await http.get(Uri.parse(googleDriveLink));
-//
-//       if (response.statusCode == 200) {
-//         List<dynamic> jsonList = jsonDecode(response.body);
-//         return jsonList.map((e) => Noti.fromJson(e)).toList();
-//       } else {
-//         throw Exception('Failed to load notifications');
-//       }
-//     } catch (e) {
-//       print('Error loading notifications: $e');
-//       throw e;
-//     }
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Notifications'),
-//       ),
-//       body: ListView.builder(
-//         //itemCount: notifications.length,
-//
-//
-//         itemBuilder: (context, index) {
-//           return ListTile(
-//             title: Text(notifications[index].notiTitle),
-//             subtitle: Text(notifications[index].notiContent),
-//             leading: Image.network(notifications[index].imageUrl),
-//               onTap: () {
-//                 // Navigate to detail screen when a notification is clicked
-//                 Navigator.push(
-//                   context,
-//                   MaterialPageRoute(
-//                     builder: (context) => NotificationDetailScreen(notification: notifications[index]),
-//                   ),
-//                 );
-//               }
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
 
 class NotificationScreen extends StatefulWidget {
   @override
@@ -181,28 +91,66 @@ class _NotificationScreenState extends State<NotificationScreen> {
             );
           } else if (snapshot.hasError) {
             return const Center(
-              child: Text('No internet connection or weak internet connection'),
+              child: Text('Please check your internet connection'),
             );
           } else {
             List<Noti>? notifications = snapshot.data;
             return ListView.builder(
               itemCount: notifications?.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(notifications![index].notiTitle),
-                  subtitle: Text(notifications[index].notiContent),
-                  leading: Image.network(notifications[index].imageUrl),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => NotificationDetailScreen(notification: notifications[index]),
-                      ),
-                    );
-                  },
+                return Card(
+                  elevation: 3,
+                  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  child: ListTile(
+                    contentPadding: EdgeInsets.all(10),
+                    title: Text(
+                      notifications![index].notiTitle,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(
+                      notifications[index].notiContent,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    leading: Image.network(
+                      notifications[index].imageUrl,
+                      width: 60,
+                      height: 60,
+                      fit: BoxFit.cover,
+                    ),
+                    trailing: Icon(Icons.arrow_forward_ios),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              NotificationDetailScreen(notification: notifications[index]),
+                        ),
+                      );
+                    },
+                  ),
                 );
               },
             );
+
+            // return ListView.builder(
+            //   itemCount: notifications?.length,
+            //   itemBuilder: (context, index) {
+            //     return ListTile(
+            //       title: Text(notifications![index].notiTitle),
+            //       // subtitle: Text(notifications[index].notiContent),
+            //       leading: Image.network(notifications[index].imageUrl),
+            //       onTap: () {
+            //         Navigator.push(
+            //           context,
+            //           MaterialPageRoute(
+            //             builder: (context) => NotificationDetailScreen(notification: notifications[index]),
+            //           ),
+            //         );
+            //       },
+            //     );
+            //   },
+            // );
           }
         },
       ),

@@ -24,18 +24,21 @@ class NotificationDetailScreen extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            SizedBox(height: 20),
-            Text(
-              notification.notiTitle,
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Text(
+                notification.notiTitle,
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
                 notification.notiContent,
-                style: TextStyle(fontSize: 18),
-                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 14),
+                textAlign: TextAlign.justify,
               ),
             ),
           ],
