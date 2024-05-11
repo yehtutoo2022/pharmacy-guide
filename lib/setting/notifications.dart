@@ -116,14 +116,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   Future<List<Noti>> loadNotifications() async {
     //you can replace with other Google Drive link
-    String googleDriveLink = 'https://drive.google.com/uc?id=1D5ObejHN3g1I0ORk3WgrO2cRzJ_dD4qM';
+   // String googleDriveLink = 'https://drive.google.com/uc?id=1D5ObejHN3g1I0ORk3WgrO2cRzJ_dD4qM';
+    String githubRawUrl = 'https://raw.githubusercontent.com/yehtutoo2022/pharmacy-guide/master/assets/noti_data.json';
 
     try {
       final response = await http.get(
-          Uri.parse(googleDriveLink),
-        headers: {
-          'Accept-Charset': 'utf-8', // Specify UTF-8 charset
-        },
+          Uri.parse(githubRawUrl),
+         // Uri.parse(googleDriveLink),
       );
 
       if (response.statusCode == 200) {
@@ -197,7 +196,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => NotificationDetailScreen(notification: notifications![index]),
+                        builder: (context) => NotificationDetailScreen(notification: notifications[index]),
                       ),
                     );
                   },
