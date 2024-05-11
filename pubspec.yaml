@@ -82,6 +82,7 @@ flutter:
     - assets/locales/my.json
     - assets/about_app.txt
     - assets/images/mm_pharmacy_guide_logo.png
+    - assets/noti_data.json
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

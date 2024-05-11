@@ -3,7 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:pharmacy_guide2/setting/theme.dart';
 import 'package:pharmacy_guide2/setting/update_data_screen.dart';
 
+import 'notifications.dart';
+
 class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,6 +16,16 @@ class SettingsScreen extends StatelessWidget {
       ),
       body: ListView(
         children: <Widget>[
+          ListTile(
+            title: const Text('Notifications'),
+            onTap: () {
+              // Navigate to theme settings screen
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NotificationScreen()),
+              );
+            },
+          ),
           ListTile(
             title: const Text('Update Database'),
             onTap: () {
@@ -68,12 +82,12 @@ class AboutScreen extends StatelessWidget {
                 children: [
                   // Image widget
                   Image.asset(
-                    'assets/images/mm_pharmacy_guide_logo.png', // Replace 'your_image.png' with your actual image asset path
-                    height: 200, // Adjust height as needed
-                    width: 200, // Adjust width as needed
+                    'assets/images/mm_pharmacy_guide_logo.png',
+                    height: 200,
+                    width: 200,
                   ),
                   // Padding between image and text
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   // Text widget
                   Padding(
                     padding: const EdgeInsets.all(20.0),
