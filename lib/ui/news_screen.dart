@@ -80,35 +80,43 @@ class _NewsScreenState extends State<NewsScreen> {
                 return Card(
                   elevation: 3,
                   margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  child: ListTile(
-                    contentPadding: EdgeInsets.all(10),
-                    title: Text(
-                      news![index].title,
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    subtitle: Text(
-                      news[index].contentP1,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    leading: Image.network(
-                      news[index].imageUrl,
-                      width: 60,
-                      height: 60,
-                      fit: BoxFit.cover,
-                    ),
-                    trailing: Icon(Icons.arrow_forward_ios),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              NewsDetailScreen(news: news[index]),
+                  child: Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.network(
+                          news![index].imageUrl,
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: 200, // Adjust this height as needed
                         ),
-                      );
-                    },
+                      ),
+                      ListTile(
+                        contentPadding: EdgeInsets.all(10),
+                        title: Text(
+                          news![index].title,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text(
+                          news[index].contentP1,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        trailing: Icon(Icons.arrow_forward_ios),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  NewsDetailScreen(news: news[index]),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 );
+
               },
             );
 
