@@ -20,18 +20,15 @@ class _NotificationScreenState extends State<NotificationScreen> {
   void initState() {
     super.initState();
     _notifications = loadNotifications();
-   // _notifications = loadNotificationsAssets();
   }
 
   Future<List<Noti>> loadNotifications() async {
-    //you can replace with other Google Drive link
-   // String googleDriveLink = 'https://drive.google.com/uc?id=1D5ObejHN3g1I0ORk3WgrO2cRzJ_dD4qM';
-    String githubRawUrl = 'https://raw.githubusercontent.com/yehtutoo2022/pharmacy-guide/master/assets/noti_data.json';
+
+    String githubRawUrl = 'https://raw.githubusercontent.com/yehtutoo2022/pharmacy-guide/master/assets/news_data.json';
 
     try {
       final response = await http.get(
           Uri.parse(githubRawUrl),
-         // Uri.parse(googleDriveLink),
       );
 
       if (response.statusCode == 200) {
