@@ -10,7 +10,7 @@ import 'package:vibration/vibration.dart';
 import '../data/drug_model.dart';
 import '../data/hitory_provider.dart';
 import '../ui/drugs_detail.dart';
-//old corrected code
+
 class DrugsListFilter extends StatefulWidget {
   const DrugsListFilter({super.key});
 
@@ -321,9 +321,9 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
                         ),
                       );
                     }).toList(),
-                    icon: const Icon(
+                    icon:  Icon(
                       Icons.arrow_drop_down,
-                      color: Colors.red,
+                      color: Colors.blue[200],
                     ),
                   ),
 
@@ -356,8 +356,8 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
                         ),
                       );
                     }).toList(),
-                    icon: const Icon(Icons.arrow_drop_down,
-                        size: 30, color: Colors.red),
+                    icon:  Icon(Icons.arrow_drop_down,
+                        size: 30, color: Colors.blue[200]),
                   ),
                 ],
               ),
@@ -387,32 +387,32 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('MM Pharmacy Guide'),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.filter_alt),
-              color: Colors.red,
-              onPressed: () {
-                _showFilterDialog();
-                // Show the filter dialog when the filter icon is pressed
-              },
-            ),
-            // PopupMenuButton<String>(
-            //   itemBuilder: (BuildContext context) => [
-            //     const PopupMenuItem(
-            //       value: 'update',
-            //       child: ListTile(
-            //         leading: Icon(Icons.browser_updated),
-            //         title: Text('Update Data'),
-            //       ),
-            //     ),
-            //   ],
-            //   onSelected: (String value) {
-            //     if (value == 'update') {
-            //       updateData();
-            //      }
-            //   },
-            // ),
-          ],
+          // actions: [
+          //   IconButton(
+          //     icon: const Icon(Icons.filter_alt),
+          //     color: Colors.blue[200],
+          //     onPressed: () {
+          //       _showFilterDialog();
+          //       // Show the filter dialog when the filter icon is pressed
+          //     },
+          //   ),
+          //   // PopupMenuButton<String>(
+          //   //   itemBuilder: (BuildContext context) => [
+          //   //     const PopupMenuItem(
+          //   //       value: 'update',
+          //   //       child: ListTile(
+          //   //         leading: Icon(Icons.browser_updated),
+          //   //         title: Text('Update Data'),
+          //   //       ),
+          //   //     ),
+          //   //   ],
+          //   //   onSelected: (String value) {
+          //   //     if (value == 'update') {
+          //   //       updateData();
+          //   //      }
+          //   //   },
+          //   // ),
+          // ],
         ),
         body: Column(
           children: [
@@ -433,17 +433,29 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(18.0), // Adjust the radius as needed
                   ),
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.clear_all),
-                    //this can use two search methods
-                    onPressed: () {
-                      searchController.clear();
-                      if (searchDrugsByBrandName) {
-                        _searchDrugsByBrandName('');
-                      } else {
-                        _searchDrugsByGenericName('');
-                      }
-                    },
+                  suffixIcon: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.clear_all),
+                        //this can use two search methods
+                        onPressed: () {
+                          searchController.clear();
+                          if (searchDrugsByBrandName) {
+                            _searchDrugsByBrandName('');
+                          } else {
+                            _searchDrugsByGenericName('');
+                          }
+                        },
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.filter_alt),
+                        color: Colors.blue[200],
+                        onPressed: () {
+                          _showFilterDialog();
+                        },
+                      ),
+                    ],
                   ),
                 ),
 
@@ -481,7 +493,7 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
               ),
             Expanded(
               child: allDrugs.isEmpty
-                  ? Center(
+                  ? const Center(
                       child: CircularProgressIndicator(),
                     )
                   : ListView.separated(

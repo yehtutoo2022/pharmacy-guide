@@ -35,20 +35,34 @@ class _UpdateDataScreenState extends State<UpdateDataScreen> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: <Widget>[
+            const Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Image(
+                image: AssetImage('assets/images/mm_pharmacy_guide_logo.png'),
+                width: 200,
+                height: 200,
+              ),
+            ),
+            const SizedBox(height: 40),
             Text(
               'Last Updated: $_lastUpdatedDate',
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.blue[200]!),
+              ),
               onPressed: _updating ? null : () => _updateData(context),
               child: const Text('Update Drugs Database'),
             ),
             if (_updating)
-              Padding(
-                padding: const EdgeInsets.only(top: 16.0),
-                child: CircularProgressIndicator(),
+              const Padding(
+                padding: EdgeInsets.only(top: 16.0),
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                ),
               ),
           ],
         ),

@@ -188,7 +188,7 @@ class _FavoriteDrugListScreenState extends State<FavoriteDrugListScreen> {
                       ),
                   ],
                 ),
-                subtitle: Text('Ingredients: ${drug.ingredients}'),
+                // subtitle: Text('Ingredients: ${drug.ingredients}'),
                 onTap: () {
                   if (_isInSelectionMode) {
                     _toggleSelection(drug);

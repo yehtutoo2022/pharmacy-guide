@@ -63,7 +63,7 @@ class _HomeMenuState extends State<HomeMenu> {
         unselectedItemColor:
             Colors.grey, // Color for unselected items (icon and label)
         selectedItemColor:
-            Colors.red, // Color for selected items (icon and label)
+            Colors.blue[200], // Color for selected items (icon and label)
         backgroundColor: Colors.brown[100],
       ),
     );

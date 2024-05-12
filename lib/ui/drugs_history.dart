@@ -155,7 +155,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           onChanged: (_) => _toggleSelection(drug) ),
                   ],
                 ),
-                subtitle: Text('Category: ${drug.category}'),
+                // subtitle: Text('Category: ${drug.category}'),
                 onTap: () {
                   if(_isInSelectionMode) {
                     _toggleSelection(drug);
