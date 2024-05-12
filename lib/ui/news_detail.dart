@@ -26,13 +26,22 @@ class NewsDetailScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Padding(
-              padding: const EdgeInsets.all(12.0),
+              padding: const EdgeInsets.all(18.0),
               child: Text(
                 news.title,
                 style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
             const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text(
+                'Source: ${news.source}',
+                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
+                textAlign: TextAlign.left,
+              ),
+            ),
+            const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(

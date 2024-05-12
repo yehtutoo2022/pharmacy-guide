@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import '../data/noti_model.dart';
 import 'notification_detail.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationScreen extends StatefulWidget {
   @override
@@ -24,7 +24,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   Future<List<Noti>> loadNotifications() async {
 
-    String githubRawUrl = 'https://raw.githubusercontent.com/yehtutoo2022/pharmacy-guide/master/assets/news_data.json';
+    String githubRawUrl = 'https://raw.githubusercontent.com/yehtutoo2022/pharmacy-guide/master/assets/noti_data.json';
 
     try {
       final response = await http.get(

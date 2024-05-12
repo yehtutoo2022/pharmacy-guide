@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -12,7 +13,7 @@ class NewsScreen extends StatefulWidget {
 }
 
 class _NewsScreenState extends State<NewsScreen> {
-  //adding future is to show loading indicator while fetching from internet
+
 
   late Future<List<News>> _news;
 
@@ -20,18 +21,15 @@ class _NewsScreenState extends State<NewsScreen> {
   void initState() {
     super.initState();
     _news = loadNews();
-    // _notifications = loadNotificationsAssets();
   }
 
   Future<List<News>> loadNews() async {
-    //you can replace with other Google Drive link
-    // String googleDriveLink = 'https://drive.google.com/uc?id=1D5ObejHN3g1I0ORk3WgrO2cRzJ_dD4qM';
-    String githubRawUrl = 'https://raw.githubusercontent.com/yehtutoo2022/pharmacy-guide/master/assets/noti_data.json';
+    String githubRawUrl = 'https://raw.githubusercontent.com/yehtutoo2022/pharmacy-guide/master/assets/news_data.json';
 
     try {
       final response = await http.get(
         Uri.parse(githubRawUrl),
-        // Uri.parse(googleDriveLink),
+
       );
 
       if (response.statusCode == 200) {
@@ -82,27 +80,7 @@ class _NewsScreenState extends State<NewsScreen> {
                   margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   child: Stack(
                     children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Image.network(
-                          news![index].imageUrl,
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          height: 200, // Adjust this height as needed
-                        ),
-                      ),
-                      ListTile(
-                        contentPadding: EdgeInsets.all(10),
-                        title: Text(
-                          news![index].title,
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        subtitle: Text(
-                          news[index].contentP1,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        trailing: Icon(Icons.arrow_forward_ios),
+                      GestureDetector(
                         onTap: () {
                           Navigator.push(
                             context,
@@ -112,6 +90,43 @@ class _NewsScreenState extends State<NewsScreen> {
                             ),
                           );
                         },
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.network(
+                            news![index].imageUrl,
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            height: 200, // Adjust this height as needed
+                          ),
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          SizedBox(height: 200), // Spacer to push content below the image
+                          ListTile(
+                            contentPadding: EdgeInsets.all(10),
+                            title: Text(
+                              news![index].title,
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            // subtitle: Text(
+                            //   news[index].contentP1,
+                            //   maxLines: 2,
+                            //   overflow: TextOverflow.ellipsis,
+                            // ),
+                            trailing: Icon(Icons.arrow_forward_ios),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      NewsDetailScreen(news: news[index]),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
                       ),
                     ],
                   ),

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pharmacy_guide2/setting/theme.dart';
 import 'package:pharmacy_guide2/setting/update_data_screen.dart';
+import 'package:pharmacy_guide2/ui/favorite_list.dart';
 
+import '../ui/news_screen.dart';
 import 'notifications.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -23,6 +25,16 @@ class SettingsScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => NotificationScreen()),
+              );
+            },
+          ),
+          ListTile(
+            title: const Text('Favorites'),
+            onTap: () {
+              // Navigate to theme settings screen
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const FavoriteDrugListScreen()),
               );
             },
           ),
