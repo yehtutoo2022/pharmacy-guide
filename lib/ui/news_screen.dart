@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:pharmacy_guide2/data/news_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../data/noti_model.dart';
 import 'news_detail.dart';
 
 
