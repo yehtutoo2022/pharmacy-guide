@@ -30,6 +30,7 @@ class _ThemeSettingsScreenState extends State<ThemeSettingsScreen> {
     final prefs = await SharedPreferences.getInstance();
     prefs.setBool('isDarkMode', isDarkMode);
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,4 +54,5 @@ class _ThemeSettingsScreenState extends State<ThemeSettingsScreen> {
       ),
     );
   }
+
 }

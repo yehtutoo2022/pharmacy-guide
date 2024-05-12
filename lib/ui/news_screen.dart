@@ -49,7 +49,7 @@ class _NewsScreenState extends State<NewsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('News'),
+        title: const Text('Articles'),
       ),
       //FutureBuilder is to show loading indicator while fetching from internet
       body: FutureBuilder<List<News>>(

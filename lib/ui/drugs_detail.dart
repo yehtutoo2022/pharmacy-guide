@@ -90,16 +90,16 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
             const SizedBox(height: 24),
 
             //category
-            const Row(
+             Row(
               children: [
-                Icon(Icons.category),
-                SizedBox(width: 8),
+                const Icon(Icons.category),
+                const SizedBox(width: 8),
                 Text(
                   'Category - အုပ်စု',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.blueAccent
+                    color: Colors.blue[200],
                   ),
                 ),
               ],
@@ -113,19 +113,19 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
             const SizedBox(height: 34),
 
             //ingredients
-            const Row(
+             Row(
               children: [
-                Center(
+                const Center(
                   child: Icon(Icons.local_florist),
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Center(
                   child: Text(
                     'Ingredients - ပါဝင်သောဆေးများ',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                        color: Colors.blueAccent
+                      color: Colors.blue[200],
                     ),
                   ),
                 ),
@@ -139,19 +139,19 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
             ),
             const SizedBox(height: 34),
             //type
-            const Row(
+            Row(
               children: [
-                Center(
+                const Center(
                   child: Icon(Icons.category),
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Center(
                   child: Text(
-                    'Type - အမျိုးအစား',
+                    'Dosage Form - ဆေးပုံသဏ္ဌာန်',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                        color: Colors.blueAccent
+                      color: Colors.blue[200],
                     ),
                   ),
                 ),
@@ -165,19 +165,19 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
             ),
             const SizedBox(height: 34),
             //indication
-            const Row(
+            Row(
               children: [
-                Center(
+                const Center(
                   child: Icon(Icons.format_indent_increase),
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Center(
                   child: Text(
                     'Indication - ဆေးအသုံး',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                        color: Colors.blueAccent
+                      color: Colors.blue[200],
                     ),
                   ),
                 ),
@@ -194,19 +194,19 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
             ),
             const SizedBox(height: 34),
             //madeIn
-            const Row(
+            Row(
               children: [
-                Center(
+                const Center(
                   child: Icon(Icons.location_pin),
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Center(
                   child: Text(
                     'Made In - ထုတ်လုပ်သည့်နိုင်ငံ',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                        color: Colors.blueAccent
+                      color: Colors.blue[200],
                     ),
                   ),
                 ),
@@ -220,19 +220,19 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
             ),
             const SizedBox(height: 34),
             //price
-            const Row(
+            Row(
               children: [
-                Center(
+                const Center(
                   child: Icon(Icons.attach_money),
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Center(
                   child: Text(
                     'Price - စျေးနှုန်း',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                        color: Colors.blueAccent
+                      color: Colors.blue[200],
                     ),
                   ),
                 ),
@@ -241,7 +241,7 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
             const SizedBox(height: 8),
             //price
             Text(
-              '\$${widget.drug.price}',
+              '\MMK ${widget.drug.price}',
               style: const TextStyle(fontSize: 16),
             ),
           ],

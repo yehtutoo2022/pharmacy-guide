@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vibration/vibration.dart';
 import '../data/drug_model.dart';
-import '../data/hitory_provider.dart';
+import '../data/history_provider.dart';
 import 'drugs_detail.dart';
 
 class HistoryScreen extends StatefulWidget {

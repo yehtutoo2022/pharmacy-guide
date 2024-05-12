@@ -5,21 +5,22 @@ import 'package:pharmacy_guide2/setting/update_data_screen.dart';
 import 'package:pharmacy_guide2/ui/favorite_list.dart';
 import 'notifications.dart';
 
-class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
+class MoreScreen extends StatelessWidget {
+  const MoreScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: const Text('More'),
       ),
       body: ListView(
         children: <Widget>[
           ListTile(
+            leading: Icon(Icons.notifications,color: Colors.blue[200]),
             title: const Text('Notifications'),
+            trailing: Icon(Icons.keyboard_arrow_right),
             onTap: () {
-              // Navigate to theme settings screen
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => NotificationScreen()),
@@ -27,9 +28,10 @@ class SettingsScreen extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: Icon(Icons.favorite,color: Colors.blue[200]),
             title: const Text('Favorites'),
+            trailing: Icon(Icons.keyboard_arrow_right),
             onTap: () {
-              // Navigate to theme settings screen
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const FavoriteDrugListScreen()),
@@ -37,19 +39,27 @@ class SettingsScreen extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: Icon(Icons.backup_sharp,color: Colors.blue[200]),
             title: const Text('Update Database'),
+            trailing: Icon(Icons.keyboard_arrow_right),
             onTap: () {
-              // Navigate to theme settings screen
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => UpdateDataScreen()),
               );
             },
           ),
+
+          const SizedBox(height: 16), // Add space before the next ListTile
+          const ListTile(
+            title: Text('Settings',
+                style: TextStyle(fontWeight: FontWeight.bold)),
+          ),
           ListTile(
+            leading: Icon(Icons.local_florist_rounded,color: Colors.blue[200]),
             title: const Text('Theme'),
+            trailing: Icon(Icons.keyboard_arrow_right),
             onTap: () {
-              // Navigate to theme settings screen
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => ThemeSettingsScreen()),
@@ -58,16 +68,16 @@ class SettingsScreen extends StatelessWidget {
           ),
 
           ListTile(
+            leading: Icon(Icons.facebook,color: Colors.blue[200]),
             title: const Text('About App'),
+            trailing: Icon(Icons.keyboard_arrow_right),
             onTap: () {
-              // Navigate to language settings screen
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => AboutScreen()),
               );
             },
           ),
-          // Add more settings options here...
         ],
       ),
     );
@@ -90,15 +100,12 @@ class AboutScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Image widget
                   Image.asset(
                     'assets/images/mm_pharmacy_guide_logo.png',
                     height: 200,
                     width: 200,
                   ),
-                  // Padding between image and text
                   const SizedBox(height: 20),
-                  // Text widget
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Text(

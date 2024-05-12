@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/drug_model.dart';
-import '../data/hitory_provider.dart';
+import '../data/history_provider.dart';
 import 'drugs_detail.dart';
 
 class DrugsListScreen extends StatefulWidget {

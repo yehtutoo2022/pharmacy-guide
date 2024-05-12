@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vibration/vibration.dart';
 import '../data/drug_model.dart';
-import '../data/hitory_provider.dart';
+import '../data/history_provider.dart';
 import '../ui/drugs_detail.dart';
 
 class DrugsListFilter extends StatefulWidget {
@@ -266,15 +266,15 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
     }
   }
 
-  Future <void> updateData() async {
-    // Trigger data download when the button is pressed
-    try {
-      await downloadData();
-    } catch (e) {
-      // Handle any errors that occur during data download
-      print('Error downloading data: $e');
-    }
-  }
+  // Future <void> updateData() async {
+  //   // Trigger data download when the button is pressed
+  //   try {
+  //     await downloadData();
+  //   } catch (e) {
+  //     // Handle any errors that occur during data download
+  //     print('Error downloading data: $e');
+  //   }
+  // }
 
   void _showFilterDialog() {
     Vibration.vibrate(duration: 100);
@@ -331,7 +331,7 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
                   const Padding(
                     padding: EdgeInsets.symmetric(vertical: 8.0),
                     child: Text(
-                      'Filter by Type',
+                      'Filter by Dosage Form',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,

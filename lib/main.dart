@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_locales/flutter_locales.dart';
 import 'package:pharmacy_guide2/data/favorite_drug_provider.dart';
-import 'package:pharmacy_guide2/data/hitory_provider.dart';
+import 'package:pharmacy_guide2/data/history_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'home_menu.dart';
@@ -40,6 +40,8 @@ Future<void> main() async {
 
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   //const MyApp({Key? key}) : super(key: key);
   static void setTheme(BuildContext context, ThemeData themeData) {
     final _MyAppState state = context.findAncestorStateOfType<_MyAppState>()!;
