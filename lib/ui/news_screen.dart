@@ -107,7 +107,7 @@ class _NewsScreenState extends State<NewsScreen> {
                           ListTile(
                             contentPadding: EdgeInsets.all(10),
                             title: Text(
-                              news![index].title,
+                              news[index].title,
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             // subtitle: Text(

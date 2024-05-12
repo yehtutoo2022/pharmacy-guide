@@ -3,8 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:pharmacy_guide2/setting/theme.dart';
 import 'package:pharmacy_guide2/setting/update_data_screen.dart';
 import 'package:pharmacy_guide2/ui/favorite_list.dart';
-
-import '../ui/news_screen.dart';
 import 'notifications.dart';
 
 class SettingsScreen extends StatelessWidget {

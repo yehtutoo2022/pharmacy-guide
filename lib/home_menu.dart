@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pharmacy_guide2/setting/settings.dart';
 import 'package:pharmacy_guide2/ui/drugs_history.dart';
-import 'package:pharmacy_guide2/ui/favorite_list.dart';
 import 'package:pharmacy_guide2/ui/news_screen.dart';
 
 import 'advance/drugs_list_filter.dart';
