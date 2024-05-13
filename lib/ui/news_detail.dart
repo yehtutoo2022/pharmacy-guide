@@ -50,6 +50,7 @@ class NewsDetailScreen extends StatelessWidget {
                 textAlign: TextAlign.justify,
               ),
             ),
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
@@ -58,6 +59,7 @@ class NewsDetailScreen extends StatelessWidget {
                 textAlign: TextAlign.justify,
               ),
             ),
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
@@ -66,6 +68,7 @@ class NewsDetailScreen extends StatelessWidget {
                 textAlign: TextAlign.justify,
               ),
             ),
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
@@ -74,6 +77,7 @@ class NewsDetailScreen extends StatelessWidget {
                 textAlign: TextAlign.justify,
               ),
             ),
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
