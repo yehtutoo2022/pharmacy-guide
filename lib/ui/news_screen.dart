@@ -62,7 +62,7 @@ class _NewsScreenState extends State<NewsScreen> {
                 children: [
                   CircularProgressIndicator(),
                   SizedBox(height: 20),
-                  Text('Loading News...'),
+                  Text('Loading Articles...'),
                 ],
               ),
             );
