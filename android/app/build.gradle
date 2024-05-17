@@ -1,3 +1,4 @@
+//original text
 plugins {
     id "com.android.application"
     id "kotlin-android"
@@ -21,6 +22,14 @@ def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
+
+//added 4 lines
+//apply plugin: 'com.android.application'
+//// START: FlutterFire Configuration
+//apply plugin: 'com.google.gms.google-services'
+//// END: FlutterFire Configuration
+//apply plugin: 'kotlin-android'
+////apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
     namespace "com.yho.pharmacyguide2.pharmacy_guide2"
@@ -64,4 +73,8 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+    //added two line
+//    implementation platform('com.google.firebase:firebase-bom:33.0.0')
+//    implementation 'com.google.firebase:firebase-analytics'
+}
