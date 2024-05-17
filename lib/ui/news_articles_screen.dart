@@ -71,7 +71,11 @@ class _NewsScreenState extends State<NewsScreen> {
     }
   }
 
-
+  Future<void> _refreshNews() async {
+    setState(() {
+      _news = _fetchNews();
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,70 +110,73 @@ class _NewsScreenState extends State<NewsScreen> {
             );
           } else {
             List<News>? news = snapshot.data;
-            return ListView.builder(
-              itemCount: news?.length,
-              itemBuilder: (context, index) {
-                return SizedBox(
-                  width: MediaQuery.of(context).size.width / 4,
-                  child: Card(
-                    elevation: 3,
-                    margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    child: Stack(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    NewsDetailScreen(news: news[index]),
+            return RefreshIndicator(
+              onRefresh: _refreshNews,
+              child: ListView.builder(
+                itemCount: news?.length,
+                itemBuilder: (context, index) {
+                  return SizedBox(
+                    width: MediaQuery.of(context).size.width / 4,
+                    child: Card(
+                      elevation: 3,
+                      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      child: Stack(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      NewsDetailScreen(news: news[index]),
+                                ),
+                              );
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.network(
+                                news![index].imageUrl,
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                height: 200, // Adjust this height as needed
                               ),
-                            );
-                          },
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.network(
-                              news![index].imageUrl,
-                              fit: BoxFit.cover,
-                              width: double.infinity,
-                              height: 200, // Adjust this height as needed
                             ),
                           ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            SizedBox(height: 200), // Spacer to push content below the image
-                            ListTile(
-                              contentPadding: EdgeInsets.all(10),
-                              title: Text(
-                                news[index].title,
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              SizedBox(height: 200), // Spacer to push content below the image
+                              ListTile(
+                                contentPadding: EdgeInsets.all(10),
+                                title: Text(
+                                  news[index].title,
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                // subtitle: Text(
+                                //   news[index].contentP1,
+                                //   maxLines: 2,
+                                //   overflow: TextOverflow.ellipsis,
+                                // ),
+                                trailing: Icon(Icons.arrow_forward_ios),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          NewsDetailScreen(news: news[index]),
+                                    ),
+                                  );
+                                },
                               ),
-                              // subtitle: Text(
-                              //   news[index].contentP1,
-                              //   maxLines: 2,
-                              //   overflow: TextOverflow.ellipsis,
-                              // ),
-                              trailing: Icon(Icons.arrow_forward_ios),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        NewsDetailScreen(news: news[index]),
-                                  ),
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-
-              },
+                  );
+              
+                },
+              ),
             );
 
           }
