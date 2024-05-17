@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pharmacy_guide2/setting/theme.dart';
 import 'package:pharmacy_guide2/setting/update_data_screen.dart';
+import 'package:pharmacy_guide2/ui/bookmark_screen.dart';
 import 'package:pharmacy_guide2/ui/favorite_list.dart';
 import 'notifications.dart';
 
@@ -12,12 +13,18 @@ class MoreScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('More'),
+        title: const Text(
+        'More',
+        style: TextStyle(
+        color: Colors.white,
+        )
+        ),
+        backgroundColor: Colors.blue[800],
       ),
       body: ListView(
         children: <Widget>[
           ListTile(
-            leading: Icon(Icons.notifications,color: Colors.blue[200]),
+            leading: Icon(Icons.notifications,color: Colors.blue[800]),
             title: const Text('Notifications'),
             trailing: Icon(Icons.keyboard_arrow_right),
             onTap: () {
@@ -28,7 +35,7 @@ class MoreScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.favorite,color: Colors.blue[200]),
+            leading: Icon(Icons.favorite,color: Colors.blue[800]),
             title: const Text('Favorites'),
             trailing: Icon(Icons.keyboard_arrow_right),
             onTap: () {
@@ -39,7 +46,18 @@ class MoreScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.backup_sharp,color: Colors.blue[200]),
+            leading: Icon(Icons.bookmark,color: Colors.blue[800]),
+            title: const Text('Bookmarks'),
+            trailing: Icon(Icons.keyboard_arrow_right),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) =>  BookmarkScreen()),
+              );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.backup_sharp,color: Colors.blue[800]),
             title: const Text('Update Database'),
             trailing: Icon(Icons.keyboard_arrow_right),
             onTap: () {
@@ -56,7 +74,7 @@ class MoreScreen extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.bold)),
           ),
           ListTile(
-            leading: Icon(Icons.local_florist_rounded,color: Colors.blue[200]),
+            leading: Icon(Icons.local_florist_rounded,color: Colors.blue[800]),
             title: const Text('Theme'),
             trailing: Icon(Icons.keyboard_arrow_right),
             onTap: () {
@@ -68,7 +86,7 @@ class MoreScreen extends StatelessWidget {
           ),
 
           ListTile(
-            leading: Icon(Icons.facebook,color: Colors.blue[200]),
+            leading: Icon(Icons.facebook,color: Colors.blue[800]),
             title: const Text('About App'),
             trailing: Icon(Icons.keyboard_arrow_right),
             onTap: () {

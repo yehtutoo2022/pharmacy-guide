@@ -35,7 +35,6 @@ class _FavoriteDrugListScreenState extends State<FavoriteDrugListScreen> {
       _isInSelectionMode = false;
     });
   }
-
   void _deleteSelectedDrugs (BuildContext context) {
     // Vibrate for 100 milliseconds
     Vibration.vibrate(duration: 100);
@@ -67,7 +66,6 @@ class _FavoriteDrugListScreenState extends State<FavoriteDrugListScreen> {
         }
     );
   }
-
   void _clearAllFavorite(BuildContext context) {
     // Vibrate for 100 milliseconds
     Vibration.vibrate(duration: 100);
@@ -103,32 +101,10 @@ class _FavoriteDrugListScreenState extends State<FavoriteDrugListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(_isInSelectionMode ? 'Selected ${_selectedDrugs.length}' : 'Favorite Drugs'),
-      //   actions: _isInSelectionMode
-      //       ? [
-      //     IconButton(
-      //       icon: Icon(Icons.delete),
-      //       onPressed: () => _deleteSelectedDrugs(context),
-      //     ),
-      //     IconButton(
-      //       icon: Icon(Icons.cancel),
-      //       onPressed: () => _clearAllSelected(),
-      //     ),
-      //   ]
-      //       : [
-      //     TextButton(
-      //       onPressed: () => _clearAllFavorite(context),
-      //       child: const Text(
-      //         'Remove All',
-      //         style: TextStyle(color: Colors.black),
-      //       ),
-      //     ),
-      //   ],
-      // ),
       appBar: AppBar(
         title: Text(_isInSelectionMode ? 'Selected ${_selectedDrugs.length}' : 'Favorite Drugs'),
         actions: _isInSelectionMode
+        //in selection mode, it show delete icon and clear icon
             ? [
           IconButton(
             icon: const Icon(Icons.delete),
@@ -139,6 +115,7 @@ class _FavoriteDrugListScreenState extends State<FavoriteDrugListScreen> {
             onPressed: () => _clearAllSelected(),
           ),
         ]
+        //if not in selection mode, it show remove all
             : [
           TextButton(
             onPressed: () => _clearAllFavorite(context),
@@ -156,7 +133,6 @@ class _FavoriteDrugListScreenState extends State<FavoriteDrugListScreen> {
       body: Consumer<FavoriteDrugProvider>(
         builder: (context, favoriteDrugProvider, _) {
           final favoriteDrugs = favoriteDrugProvider.favoriteDrugs;
-
           if (favoriteDrugs.isEmpty) {
             return const Center(
               child: Text('No favorite drugs yet.'),

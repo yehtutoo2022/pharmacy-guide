@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_locales/flutter_locales.dart';
+import 'package:pharmacy_guide2/data/bookmark_provider.dart';
 import 'package:pharmacy_guide2/data/favorite_drug_provider.dart';
 import 'package:pharmacy_guide2/data/history_provider.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +31,9 @@ Future<void> main() async {
         ),
         ChangeNotifierProvider(
           create: (context) => HistoryProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => BookmarkProvider(),
         ),
       ],
       child: MyApp(),

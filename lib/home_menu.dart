@@ -59,10 +59,8 @@ class _HomeMenuState extends State<HomeMenu> {
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        unselectedItemColor:
-            Colors.grey, // Color for unselected items (icon and label)
-        selectedItemColor:
-            Colors.blue[200], // Color for selected items (icon and label)
+        unselectedItemColor: Colors.grey, // Color for unselected items (icon and label)
+        selectedItemColor: Colors.blue[800], // Color for selected items (icon and label)
         backgroundColor: Colors.brown[100],
       ),
     );

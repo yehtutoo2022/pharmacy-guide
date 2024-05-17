@@ -12,55 +12,60 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
-  //adding future is to show loading indicator while fetching from internet
-
-  late Future<List<Noti>> _notifications;
+  late Future<List<Noti>> _noti;
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _notifications = loadNotifications();
+    _noti = _loadCachedNoti();
   }
 
-  Future<List<Noti>> loadNotifications() async {
-
-    String githubRawUrl = 'https://raw.githubusercontent.com/yehtutoo2022/pharmacy-guide/master/assets/noti_data.json';
-
+  Future<List<Noti>> _loadCachedNoti() async {
     try {
-      final response = await http.get(
-          Uri.parse(githubRawUrl),
-      );
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? cachedNoti = prefs.getString('cached_noti');
+
+      if (cachedNoti != null) {
+        List<dynamic> jsonList = jsonDecode(cachedNoti);
+        List<Noti> cachedNotiList = jsonList.map((e) => Noti.fromJson(e)).toList();
+        setState(() {
+          _isLoading = false;
+        });
+        return cachedNotiList;
+      }
+    } catch (e) {
+      print('Error loading cached notifications: $e');
+    }
+    // If cached data not found or error occurred, fetch it from the network
+    return _fetchNoti();
+  }
+
+  Future<List<Noti>> _fetchNoti() async {
+    try {
+      String githubRawUrl = 'https://raw.githubusercontent.com/yehtutoo2022/pharmacy-guide/master/assets/noti_data.json';
+      final response = await http.get(Uri.parse(githubRawUrl));
 
       if (response.statusCode == 200) {
         List<dynamic> jsonList = jsonDecode(response.body);
-        return jsonList.map((e) => Noti.fromJson(e)).toList();
+        List<Noti> notiList = jsonList.map((e) => Noti.fromJson(e)).toList();
+
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('cached_noti', jsonEncode(jsonList));
+
+        setState(() {
+          _isLoading = false;
+        });
+        return notiList;
       } else {
         throw Exception('Failed to load notifications');
       }
     } catch (e) {
       print('Error loading notifications: $e');
-      throw e;
-    }
-  }
-
-  Future<List<Noti>> loadNotificationsAssets() async {
-    // path
-    String assetPath = 'assets/noti_data.json';
-
-    try {
-      // Load JSON string from assets
-      String jsonString = await rootBundle.loadString(assetPath);
-
-      // Parse JSON string
-      List<dynamic> jsonList = jsonDecode(jsonString);
-
-      // Convert JSON objects to Noti objects
-      List<Noti> notifications = jsonList.map((e) => Noti.fromJson(e)).toList();
-
-      return notifications;
-    } catch (e) {
-      print('Error loading notifications from assets: $e');
-      throw e;
+      setState(() {
+        _isLoading = false;
+      });
+      return [];
     }
   }
 
@@ -70,38 +75,34 @@ class _NotificationScreenState extends State<NotificationScreen> {
       appBar: AppBar(
         title: const Text('Notifications'),
       ),
-      //FutureBuilder is to show loading indicator while fetching from internet
       body: FutureBuilder<List<Noti>>(
-        future: _notifications,
+        future: _noti,
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircularProgressIndicator(),
-                  SizedBox(height: 20),
-                  Text('Loading Notifications...'),
-                ],
-              ),
+          if (_isLoading) {
+            return Center(
+              child: CircularProgressIndicator(),
             );
           } else if (snapshot.hasError) {
-            return const Center(
-              child: Text('Please check your internet connection'),
+            return Center(
+              child: Text('Error: ${snapshot.error}'),
+            );
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return Center(
+              child: Text('No notifications available'),
             );
           } else {
             List<Noti>? notifications = snapshot.data;
             return ListView.builder(
-              itemCount: notifications?.length,
+              itemCount: notifications!.length,
               itemBuilder: (context, index) {
                 return Card(
                   elevation: 3,
-                  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   child: ListTile(
-                    contentPadding: EdgeInsets.all(10),
+                    contentPadding: const EdgeInsets.all(10),
                     title: Text(
-                      notifications![index].notiTitle,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      notifications[index].notiTitle,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     subtitle: Text(
                       notifications[index].notiContent,
@@ -114,7 +115,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       height: 60,
                       fit: BoxFit.cover,
                     ),
-                    trailing: Icon(Icons.arrow_forward_ios),
+                    trailing: const Icon(Icons.arrow_forward_ios),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -128,7 +129,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 );
               },
             );
-
           }
         },
       ),

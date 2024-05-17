@@ -1,3 +1,4 @@
+//model is important to maintain favorite status to provider and prevent duplicate
 class Drug {
   final String name;
   final String type;
@@ -62,6 +63,14 @@ class Drug {
 
   @override
   int get hashCode {
-    return Object.hash(name, type, ingredients, category, drugClass, indication, madeIn, price);
+    return Object.hash(
+        name,
+        type,
+        ingredients,
+        category,
+        drugClass,
+        indication,
+        madeIn,
+        price);
   }
 }

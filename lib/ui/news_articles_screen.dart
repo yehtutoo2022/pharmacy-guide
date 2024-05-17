@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:pharmacy_guide2/data/news_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'news_articles_detail.dart';
-
 
 class NewsScreen extends StatefulWidget {
   @override
@@ -14,33 +14,60 @@ class NewsScreen extends StatefulWidget {
 
 class _NewsScreenState extends State<NewsScreen> {
 
-
   late Future<List<News>> _news;
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _news = loadNews();
+    _news = _loadCachedNews();
   }
 
-  Future<List<News>> loadNews() async {
-    String githubRawUrl = 'https://raw.githubusercontent.com/yehtutoo2022/pharmacy-guide/master/assets/news_data.json';
-
+  Future<List<News>> _loadCachedNews() async {
     try {
-      final response = await http.get(
-        Uri.parse(githubRawUrl),
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? cachedNews = prefs.getString('cached_news');
 
-      );
+      if (cachedNews != null) {
+        List<dynamic> jsonList = jsonDecode(cachedNews);
+        List<News> cachedNewsList = jsonList.map((e) => News.fromJson(e)).toList();
+        setState(() {
+          _isLoading = false;
+        });
+        return cachedNewsList;
+      }
+    } catch (e) {
+      print('Error loading cached notifications: $e');
+    }
+    // If cached data not found or error occurred, fetch it from the network
+    return _fetchNews();
+  }
+
+  Future<List<News>> _fetchNews() async {
+    try {
+      String githubRawUrl = 'https://raw.githubusercontent.com/yehtutoo2022/pharmacy-guide/master/assets/news_data.json';
+      final response = await http.get(Uri.parse(githubRawUrl));
 
       if (response.statusCode == 200) {
         List<dynamic> jsonList = jsonDecode(response.body);
-        return jsonList.map((e) => News.fromJson(e)).toList();
+        List<News> newsList = jsonList.map((e) => News.fromJson(e)).toList();
+
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('cached_news', jsonEncode(jsonList));
+
+        setState(() {
+          _isLoading = false;
+        });
+        return newsList;
       } else {
         throw Exception('Failed to load news');
       }
     } catch (e) {
       print('Error loading news: $e');
-      throw e;
+      setState(() {
+        _isLoading = false;
+      });
+      return [];
     }
   }
 
@@ -49,7 +76,14 @@ class _NewsScreenState extends State<NewsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Articles'),
+        title: const Text(
+          'Articles',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.blue[800],
+
       ),
       //FutureBuilder is to show loading indicator while fetching from internet
       body: FutureBuilder<List<News>>(

@@ -35,7 +35,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
       _isInSelectionMode = false;
     });
   }
-
   void _deleteSelectedDrugs (BuildContext context) {
     // Vibrate for 100 milliseconds
     Vibration.vibrate(duration: 100);
@@ -67,8 +66,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
         }
     );
   }
-
-
   void _clearAllHistory(BuildContext context) {
     Vibration.vibrate(duration: 100);
     // Show confirmation dialog before clearing all history items
@@ -103,24 +100,38 @@ class _HistoryScreenState extends State<HistoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_isInSelectionMode ? 'Selected ${_selectedDrugs.length}' : 'History'),
+        title: Text(
+            _isInSelectionMode ? 'Selected ${_selectedDrugs.length}' : 'History',
+          style: const TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.blue[800],
         actions: _isInSelectionMode
+        //it show delete and clear icon when in selection mode
             ? [
           IconButton(
             icon: Icon(Icons.delete),
             onPressed: () => _deleteSelectedDrugs(context),
+            color: Colors.white,
           ),
           IconButton(
             icon: Icon(Icons.cancel),
             onPressed: () => _clearAllSelected(),
+            color: Colors.white,
           ),
         ]
+        //it show remove all by default (not in selection mode)
             : [
           TextButton(
             onPressed: () => _clearAllHistory(context),
             child: const Text(
               'Remove All',
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 14,
+                fontStyle: FontStyle.italic,
+              ),
             ),
           ),
           IconButton(
@@ -132,43 +143,49 @@ class _HistoryScreenState extends State<HistoryScreen> {
       body: Consumer<HistoryProvider>(
         builder: (context, historyProvider, _) {
           final List<Drug> history = historyProvider.history;
-
           if (history.isEmpty) {
             return const Center(
               child: Text('No drugs viewed yet.'),
             );
           }
 
-          return ListView.builder(
+          return ListView.separated(
             itemCount: history.length,
+            separatorBuilder: (BuildContext context, int index) {
+              return const Divider(
+                color: Colors.grey,
+              );
+            },
             itemBuilder: (context, index) {
               final drug = history[index];
-              return ListTile(
-                title: Row(
-                  children: [
-                    Expanded(
-                      child: Text(drug.name),
-                    ),
-                    if(_isInSelectionMode)
-                      Checkbox(
-                          value: _selectedDrugs.contains(drug),
-                          onChanged: (_) => _toggleSelection(drug) ),
-                  ],
-                ),
-                // subtitle: Text('Category: ${drug.category}'),
-                onTap: () {
-                  if(_isInSelectionMode) {
-                    _toggleSelection(drug);
-                  } else {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DrugDetailScreen(drug: drug),
+              
+              return
+                ListTile(
+                  title: Row(
+                    children: [
+                      Expanded(
+                        child: Text(drug.name),
                       ),
-                    );
-                  }
-                },
-              );
+                      if(_isInSelectionMode)
+                        Checkbox(
+                            value: _selectedDrugs.contains(drug),
+                            onChanged: (_) => _toggleSelection(drug) ),
+                    ],
+                  ),
+                  // subtitle: Text('Category: ${drug.category}'),
+                  onTap: () {
+                    if(_isInSelectionMode) {
+                      _toggleSelection(drug);
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DrugDetailScreen(drug: drug),
+                        ),
+                      );
+                    }
+                  },
+                );
             },
           );
         },

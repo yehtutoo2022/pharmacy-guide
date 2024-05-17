@@ -266,16 +266,6 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
     }
   }
 
-  // Future <void> updateData() async {
-  //   // Trigger data download when the button is pressed
-  //   try {
-  //     await downloadData();
-  //   } catch (e) {
-  //     // Handle any errors that occur during data download
-  //     print('Error downloading data: $e');
-  //   }
-  // }
-
   void _showFilterDialog() {
     Vibration.vibrate(duration: 100);
     showDialog(
@@ -386,33 +376,18 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('MM Pharmacy Guide'),
-          // actions: [
-          //   IconButton(
-          //     icon: const Icon(Icons.filter_alt),
-          //     color: Colors.blue[200],
-          //     onPressed: () {
-          //       _showFilterDialog();
-          //       // Show the filter dialog when the filter icon is pressed
-          //     },
-          //   ),
-          //   // PopupMenuButton<String>(
-          //   //   itemBuilder: (BuildContext context) => [
-          //   //     const PopupMenuItem(
-          //   //       value: 'update',
-          //   //       child: ListTile(
-          //   //         leading: Icon(Icons.browser_updated),
-          //   //         title: Text('Update Data'),
-          //   //       ),
-          //   //     ),
-          //   //   ],
-          //   //   onSelected: (String value) {
-          //   //     if (value == 'update') {
-          //   //       updateData();
-          //   //      }
-          //   //   },
-          //   // ),
-          // ],
+          // Add the logo to the leading property
+          // leading: Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: Image.asset('assets/images/logo.png', fit: BoxFit.contain),
+          // ),
+          title: const Text(
+              'MM Pharmacy Guide',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          backgroundColor: Colors.blue[800],
         ),
         body: Column(
           children: [
@@ -450,7 +425,7 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
                       ),
                       IconButton(
                         icon: Icon(Icons.filter_alt),
-                        color: Colors.blue[200],
+                        color: Colors.blue[800],
                         onPressed: () {
                           _showFilterDialog();
                         },
@@ -467,7 +442,10 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
               children: [
                 Text(
                   searchDrugsByBrandName ? 'Search by Brand Name' : 'Search by Generic Name',
-                  style: const TextStyle(fontSize: 16),
+                  style: const TextStyle(
+                      fontSize: 14,
+                      fontStyle: FontStyle.italic
+                  ),
                 ),
                 Switch(
                   value: searchDrugsByBrandName,

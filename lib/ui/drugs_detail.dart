@@ -15,7 +15,6 @@ class DrugDetailScreen extends StatefulWidget {
 
 class _DrugDetailScreenState extends State<DrugDetailScreen> {
   late FavoriteDrugProvider favoriteProvider;
-
   bool isFavorite = false;
 
   @override
@@ -49,7 +48,7 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.drug.name),
+        // title: Text(widget.drug.name),
         actions: [
           Consumer<FavoriteDrugProvider>(
             builder: (context, favoriteProvider, _) {
@@ -74,7 +73,7 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
             Container(
               padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
-                color: Colors.blue[200],
+                color: Colors.blue[800],
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: Center(
@@ -83,13 +82,14 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
+                    color: Colors.white
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 40),
 
-            //category
+            //category title
              Row(
               children: [
                 const Icon(Icons.category),
@@ -99,20 +99,20 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.blue[200],
+                    color: Colors.blue[800],
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 8),
-            //category
+            //category from database
             Text(
               widget.drug.category,
               style: const TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 34),
 
-            //ingredients
+            //ingredients title
              Row(
               children: [
                 const Center(
@@ -125,20 +125,21 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Colors.blue[200],
+                      color: Colors.blue[800],
                     ),
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 8),
-            //ingredients
+            //ingredients from database
             Text(
               widget.drug.ingredients,
               style: const TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 34),
-            //type
+
+            //Dosage form title
             Row(
               children: [
                 const Center(
@@ -151,20 +152,22 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Colors.blue[200],
+                      color: Colors.blue[800],
                     ),
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 8),
-            //type
+
+            //Dosage form from database
             Text(
               widget.drug.type,
               style: const TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 34),
-            //indication
+
+            //indication title
             Row(
               children: [
                 const Center(
@@ -177,14 +180,15 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Colors.blue[200],
+                      color: Colors.blue[800],
                     ),
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 8),
-            //indication
+
+            //indication from database
             Text(
               widget.drug.indication,
               style: const TextStyle(
@@ -193,7 +197,8 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
               textAlign: TextAlign.justify,
             ),
             const SizedBox(height: 34),
-            //madeIn
+
+            //madeIn title
             Row(
               children: [
                 const Center(
@@ -206,20 +211,22 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Colors.blue[200],
+                      color: Colors.blue[800],
                     ),
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 8),
-            //madeIn
+
+            //madeIn from database
             Text(
               widget.drug.madeIn,
               style: const TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 34),
-            //price
+
+            //price title
             Row(
               children: [
                 const Center(
@@ -232,14 +239,15 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Colors.blue[200],
+                      color: Colors.blue[800],
                     ),
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 8),
-            //price
+
+            //price from database
             Text(
               '\MMK ${widget.drug.price}',
               style: const TextStyle(fontSize: 16),
