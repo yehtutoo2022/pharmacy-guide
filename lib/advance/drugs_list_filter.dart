@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -39,9 +40,17 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
   @override
   void initState() {
     super.initState();
+    initialization();
     allDrugs = [];
     filteredDrugs = List.from(allDrugs);
     loadData();
+  }
+
+  void initialization() async {
+    print('ready in 1...');
+    await Future.delayed(const Duration(seconds: 1));
+    print('go!');
+    FlutterNativeSplash.remove();
   }
 
   void _searchDrugsByBrandName(String query) {
