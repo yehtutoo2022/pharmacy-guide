@@ -6,13 +6,20 @@
   "Image Url": "https://www.shutterstock.com/image-vector/bar-graph-line-templates-business-260nw-1038758251.jpg"
   },
   {
-    "Sr. No": 2,
+  "Sr. No": 2,
+  "Noti Title": "📢 yPOS ဗားရှင်း 1.1 အပ်ဒိတ် ထွက်ပြီးပါပြီ!",
+  "Noti Content": "yPOS ၏ နောက်ဆုံးဗားရှင်းအပ်ဒိတ် ထွက်ရှိခဲ့ပါပြီ ဆိုတဲ့ သတင်းကောင်းပါ! 🎉\n\nဘာတွေ အသစ်ဖြစ်လာလဲ:\n- လှပသော အရောင်းဇယားများ: သင့်အတွက် ပိုမိုရှင်းလင်းသော အရောင်းအမြင်တွေ ပေးစွမ်းမယ့် အရောင်းဇယား အသစ်တွေကို ထည့်သွင်းပေးထားပါတယ်။\n- အချက်အလက်များကို ဤဇယားတွင် ထင်ထင်ရှားရှား မြင်ရမည့် Tooltip များကိုပါ ဖော်ပြထားပါသည်။\n\nအခုနေရာမှာ တိုးတက်လာတဲ့ အမြင်အသစ်များနဲ့ ပိုမိုကောင်းမွန်လာတဲ့ အချက်အလက်ခွဲခြမ်းစိတ်ဖြာမှုတွေကို ခံစားလိုက်ပါ! 🚀",
+  "Image Url": "https://www.shutterstock.com/image-vector/bar-graph-line-templates-business-260nw-1038758251.jpg"
+}
+
+  {
+    "Sr. No": 3,
     "Noti Title": "Welcome to yPOS version 1.0.0",
     "Noti Content": "yPOS is an Android application that can be used as a mobile sale system, similar to large POS systems used in supermarkets. With a single software, users can sell products, can make sale list using their mobile phones.",
     "Image Url": "https://www.shutterstock.com/image-photo/hands-phone-qr-code-coffee-260nw-2383450579.jpg"
   },
   {
-    "Sr. No": 3,
+    "Sr. No": 4,
     "Noti Title": "yPOS ဗားရှင်း 1.0.0 မှ ကြိုဆိုပါတယ်။",
     "Noti Content": "yPOS သည် စူပါမားကတ်များတွင် အသုံးပြုသည့် ကြီးမားသော POS စနစ်များကဲ့သို့ မိုဘိုင်းရောင်းချမှုစနစ်အဖြစ် အသုံးပြုနိုင်သည့် Android အက်ပ်တစ်ခုဖြစ်သည်။ ဆော့ဖ်ဝဲလ်တစ်ခုတည်းဖြင့် သုံးစွဲသူများသည် ထုတ်ကုန်များကို ရောင်းချနိုင်ပြီး ၎င်းတို့၏ မိုဘိုင်းလ်ဖုန်းများကို အသုံးပြု၍ အရောင်းစာရင်းပြုလုပ်နိုင်သည်။",
     "Image Url": "https://www.shutterstock.com/image-photo/hands-phone-qr-code-coffee-260nw-2383450579.jpg"
