@@ -6,6 +6,10 @@ class Drug {
   final String category;
   final String drugClass;
   final String indication;
+  final String sideEffects;
+  final String directionUse;
+  final String sellingUnit;
+  final String manufacture;
   final String madeIn;
   final int price;
 
@@ -16,6 +20,10 @@ class Drug {
     required this.category,
     required this.drugClass,
     required this.indication,
+    required this.sideEffects,
+    required this.directionUse,
+    required this.sellingUnit,
+    required this.manufacture,
     required this.madeIn,
     required this.price,
   });
@@ -28,6 +36,10 @@ class Drug {
       category: json['Drug Category'] ?? "",
       drugClass: json['Class'] ?? "",
       indication: json['Indication'] ?? "",
+      sideEffects: json['Side Effects'] ?? "",
+      directionUse: json['Direction of Use'] ?? "",
+      sellingUnit: json['Selling Unit'] ?? "",
+      manufacture: json['Manufacture'] ?? "",
       madeIn: json['Made In '] ?? "",
       price: json['Price'] ?? 0,
     );
@@ -41,6 +53,10 @@ class Drug {
       'Drug Category': category,
       'Class': drugClass,
       'Indication': indication,
+      'Side Effects': sideEffects,
+      'Direction of Use': directionUse,
+      'Selling Unit': sellingUnit,
+      'Manufacture': manufacture,
       'Made In ': madeIn,
       'Price': price,
     };
@@ -57,6 +73,10 @@ class Drug {
         other.category == category &&
         other.drugClass == drugClass &&
         other.indication == indication &&
+        other.sideEffects == sideEffects &&
+        other.directionUse == directionUse &&
+        other.sellingUnit == sellingUnit &&
+        other.manufacture == manufacture &&
         other.madeIn == madeIn &&
         other.price == price;
   }
@@ -70,6 +90,10 @@ class Drug {
         category,
         drugClass,
         indication,
+        sideEffects,
+        directionUse,
+        sellingUnit,
+        manufacture,
         madeIn,
         price);
   }
