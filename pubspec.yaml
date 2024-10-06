@@ -1,5 +1,5 @@
 name: pharmacy_guide2
-description: "A new Flutter project."
+description: "A flutter project for Pharmacy Guide."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.3.4 <4.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -37,7 +37,7 @@ dependencies:
   eva_icons_flutter: ^3.1.0
   image_picker: ^0.8.4
   path_provider: ^2.0.4
-  intl: ^0.18.0
+  intl: ^0.19.0
   hive: ^2.0.4
   hive_flutter: ^1.0.0
   country_icons: ^2.0.2
@@ -48,11 +48,7 @@ dependencies:
   vibration: ^1.7.2
   firebase_core: ^2.24.2
   firebase_analytics: ^10.7.4
-
-flutter_native_splash:
-  color: "#00008B"
-  #background_image: "assets/images.mam_logo.jpg"
-  image: assets/splash.png
+  win32: 5.5.5
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -86,8 +82,10 @@ flutter:
     - assets/locales/my.json
     - assets/about_app.txt
     - assets/images/mm_pharmacy_guide_logo.png
+    - assets/images/image_loading.png
     - assets/noti_data.json
     - assets/splash.png
+
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

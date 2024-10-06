@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vibration/vibration.dart';
 import '../data/drug_model.dart';
 import '../data/history_provider.dart';
-import '../ui/drugs_detail.dart';
+import 'drugs_detail.dart';
 
 class DrugsListFilter extends StatefulWidget {
   const DrugsListFilter({super.key});

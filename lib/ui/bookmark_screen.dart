@@ -26,7 +26,8 @@ class BookmarkScreen extends StatelessWidget {
           ? const Center(
         child: Text('No bookmarks yet.'),
       )
-          : ListView.builder(
+          :
+      ListView.builder(
         itemCount: bookmarkedNews.length,
         itemBuilder: (context, index) {
           final News news = bookmarkedNews[index];

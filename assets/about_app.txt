@@ -1,6 +1,8 @@
 **About MM Pharmacy Guide**
 Version 1.0.0
 
+**Developed with love by Ye Htut Oo**
+
 Welcome to Pharmacy Guide, your comprehensive guide to over 1000 pharmaceutical brands available in Myanmar. Whether you're a healthcare professional, pharmacist, or an individual seeking information about medications, Pharmacy Guide is here to provide you with accurate and reliable information to aid in your healthcare journey.
 
 *Key Features:*
@@ -20,3 +22,7 @@ Welcome to Pharmacy Guide, your comprehensive guide to over 1000 pharmaceutical 
 **Get Started with Pharmacy Guide:**
 
 Download Pharmacy Guide today and gain access to a wealth of information about pharmaceutical brands available in Myanmar. Whether you're a healthcare professional, pharmacist, or an individual seeking medication information, Pharmacy Guide is your trusted companion in your healthcare journey.
+
+**Disclaimer:**
+The information provided in this app is for general informational purposes only, specifically about drugs available in Myanmar. It is not intended as medical advice or for the purpose of treatment.
+The developer is not responsible for any actions or decisions made by users based on the content of this app. Always consult a healthcare professional before making any medical decisions.

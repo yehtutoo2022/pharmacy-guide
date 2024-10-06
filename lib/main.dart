@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_locales/flutter_locales.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -5,14 +6,21 @@ import 'package:pharmacy_guide2/data/bookmark_provider.dart';
 import 'package:pharmacy_guide2/data/favorite_drug_provider.dart';
 import 'package:pharmacy_guide2/data/history_provider.dart';
 import 'package:provider/provider.dart';
-
+import 'firebase_options.dart';
 import 'home_menu.dart';
 
 
 Future<void> main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
+
    WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
    FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
 
 
   await Locales.init(
@@ -40,6 +48,8 @@ Future<void> main() async {
       child: MyApp(),
     ),
   );
+  // Remove splash screen after the app is ready
+  FlutterNativeSplash.remove();
 
 }
 

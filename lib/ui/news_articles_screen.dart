@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:pharmacy_guide2/data/news_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'bookmark_screen.dart';
 import 'news_articles_detail.dart';
 
 class NewsScreen extends StatefulWidget {
@@ -87,7 +89,19 @@ class _NewsScreenState extends State<NewsScreen> {
           ),
         ),
         backgroundColor: Colors.blue[800],
-
+        // actions: [
+        //   IconButton(
+        //     icon: Icon(Icons.bookmark, color: Colors.white),
+        //     onPressed: () {
+        //       Navigator.push(
+        //         context,
+        //         MaterialPageRoute(
+        //           builder: (context) => const BookmarkScreen(),
+        //         ),
+        //       );
+        //     },
+        //   ),
+        // ],
       ),
       //FutureBuilder is to show loading indicator while fetching from internet
       body: FutureBuilder<List<News>>(
@@ -132,10 +146,29 @@ class _NewsScreenState extends State<NewsScreen> {
                                 ),
                               );
                             },
+                            // child: ClipRRect(
+                            //   borderRadius: BorderRadius.circular(8),
+                            //   child: Image.network(
+                            //   //  placeholder: 'assets/images/image_loading.png', // Your placeholder image asset path
+                            //     news![index].imageUrl,
+                            //     fit: BoxFit.cover,
+                            //     width: double.infinity,
+                            //     height: 200, // Adjust this height as needed
+                            //   ),
+                            // ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(8),
-                              child: Image.network(
-                                news![index].imageUrl,
+                              child: CachedNetworkImage(
+                                imageUrl: news![index].imageUrl,
+                                placeholder: (context, url) => Image.asset(
+                                  'assets/images/image_loading.png',
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                  height: 200,
+                                ),
+                                errorWidget: (context, url, error) => const Icon(
+                                  Icons.error,
+                                  color: Colors.red,),
                                 fit: BoxFit.cover,
                                 width: double.infinity,
                                 height: 200, // Adjust this height as needed

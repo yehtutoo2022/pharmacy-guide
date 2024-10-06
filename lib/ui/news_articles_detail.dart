@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:pharmacy_guide2/ui/bookmark_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:vibration/vibration.dart';
 import '../data/bookmark_provider.dart';
@@ -62,6 +64,28 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
               );
             },
           ),
+          PopupMenuButton<String>(
+            onSelected: (String value) {
+              switch (value) {
+                case 'Bookmark List':
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => BookmarkScreen()), // Navigate to bookmark list
+                  );
+                  break;
+              // Add more cases for other menu items
+              }
+            },
+            itemBuilder: (BuildContext context) {
+              return {'Bookmark List'}.map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            },
+          ),
+
         ],
       ),
       body: SingleChildScrollView(
@@ -70,10 +94,23 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             AspectRatio(
-              aspectRatio: 16 / 9, // You can adjust the aspect ratio as needed
-              child: Image.network(
-                widget.news.imageUrl,
+              aspectRatio: 16 / 9,
+              // child: Image.network(
+              //   widget.news.imageUrl,
+              //   fit: BoxFit.cover,
+              // ),
+              child: CachedNetworkImage(
+                placeholder: (context, url) => Image.asset(
+                  'assets/images/image_loading.png', // Your placeholder image asset path
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: 200, // Adjust this height as needed
+                ),
+                imageUrl: widget.news.imageUrl,
                 fit: BoxFit.cover,
+                errorWidget: (context, url, error) => const Icon(
+                    Icons.error,
+                    color: Colors.red),
               ),
             ),
             const SizedBox(height: 20),

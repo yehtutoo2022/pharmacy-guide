@@ -18,9 +18,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   void _toggleSelection(Drug drug) {
     setState(() {
-      if(_selectedDrugs.contains(drug)){
+      if (_selectedDrugs.contains(drug)) {
         _selectedDrugs.remove(drug);
-        if(_selectedDrugs.isEmpty) {
+        if (_selectedDrugs.isEmpty) {
           _isInSelectionMode = false;
         }
       } else {
@@ -29,66 +29,82 @@ class _HistoryScreenState extends State<HistoryScreen> {
       }
     });
   }
+
   void _clearAllSelected() {
     setState(() {
       _selectedDrugs.clear();
       _isInSelectionMode = false;
     });
   }
-  void _deleteSelectedDrugs (BuildContext context) {
-    // Vibrate for 100 milliseconds
+
+  void _deleteSelectedDrugs(BuildContext context) {
     Vibration.vibrate(duration: 100);
 
     showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Delete Selected Drugs'),
-            content: Text('Are you sure to delete the selected drugs'),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            backgroundColor: Colors.red[50],
+            title: Text(
+              'Delete Selected Drugs',
+              style: TextStyle(color: Colors.red[900]),
+            ),
+            content: Text('Are you sure you want to delete the selected drugs?',
+                style: TextStyle(color: Colors.red[700])),
             actions: <Widget>[
               TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('Cancel')
-              ),
+                  child: Text('Cancel', style: TextStyle(color: Colors.grey))),
               TextButton(
-                onPressed: (){
+                onPressed: () {
                   Navigator.of(context).pop();
                   Provider.of<HistoryProvider>(context, listen: false)
                       .deleteSelectedDrugs(_selectedDrugs);
                   _clearAllSelected();
                 },
-                child: Text('Delete'),
+                child: Text('Delete', style: TextStyle(color: Colors.red[900])),
               ),
             ],
           );
-        }
-    );
+        });
   }
+
   void _clearAllHistory(BuildContext context) {
     Vibration.vibrate(duration: 100);
-    // Show confirmation dialog before clearing all history items
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Clear All History'),
-          content: const Text('Are you sure you want to clear all history items?'),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          backgroundColor: Colors.blue[50],
+          title: Text(
+            'Clear All History',
+            style: TextStyle(color: Colors.blue[900]),
+          ),
+          content: Text(
+              'Are you sure you want to clear all history items?',
+              style: TextStyle(color: Colors.blue[700])),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Cancel'),
+              child: const Text('Cancel', style: TextStyle(color: Colors.grey)),
             ),
             TextButton(
               onPressed: () {
-                // Call the method to clear all history items
-                Provider.of<HistoryProvider>(context, listen: false).clearAllHistory();
+                Provider.of<HistoryProvider>(context, listen: false)
+                    .clearAllHistory();
                 Navigator.of(context).pop();
               },
-              child: const Text('Clear All'),
+              child: Text('Clear All', style: TextStyle(color: Colors.blue[900])),
             ),
           ],
         );
@@ -101,14 +117,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-            _isInSelectionMode ? 'Selected ${_selectedDrugs.length}' : 'History',
+          _isInSelectionMode
+              ? 'Selected ${_selectedDrugs.length}'
+              : 'History',
           style: const TextStyle(
             color: Colors.white,
           ),
         ),
         backgroundColor: Colors.blue[800],
         actions: _isInSelectionMode
-        //it show delete and clear icon when in selection mode
             ? [
           IconButton(
             icon: Icon(Icons.delete),
@@ -121,7 +138,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
             color: Colors.white,
           ),
         ]
-        //it show remove all by default (not in selection mode)
             : [
           TextButton(
             onPressed: () => _clearAllHistory(context),
@@ -130,13 +146,16 @@ class _HistoryScreenState extends State<HistoryScreen> {
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 14,
-                fontStyle: FontStyle.italic,
+                fontStyle: FontStyle.normal,
               ),
             ),
           ),
           IconButton(
-            icon: Icon(_isInSelectionMode ? Icons.check_box : Icons.check_box_outline_blank),
-            onPressed: () => setState(() => _isInSelectionMode = !_isInSelectionMode),
+            icon: Icon(_isInSelectionMode
+                ? Icons.check_box
+                : Icons.check_box_outline_blank),
+            onPressed: () =>
+                setState(() => _isInSelectionMode = !_isInSelectionMode),
           ),
         ],
       ),
@@ -149,43 +168,43 @@ class _HistoryScreenState extends State<HistoryScreen> {
             );
           }
 
+          final reversedHistory = history.reversed.toList();
+
           return ListView.separated(
-            itemCount: history.length,
+            itemCount: reversedHistory.length,
             separatorBuilder: (BuildContext context, int index) {
               return const Divider(
                 color: Colors.grey,
               );
             },
             itemBuilder: (context, index) {
-              final drug = history[index];
-              
-              return
-                ListTile(
-                  title: Row(
-                    children: [
-                      Expanded(
-                        child: Text(drug.name),
+              final drug = reversedHistory[index];
+
+              return ListTile(
+                title: Row(
+                  children: [
+                    Expanded(
+                      child: Text(drug.name),
+                    ),
+                    if (_isInSelectionMode)
+                      Checkbox(
+                          value: _selectedDrugs.contains(drug),
+                          onChanged: (_) => _toggleSelection(drug)),
+                  ],
+                ),
+                onTap: () {
+                  if (_isInSelectionMode) {
+                    _toggleSelection(drug);
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DrugDetailScreen(drug: drug),
                       ),
-                      if(_isInSelectionMode)
-                        Checkbox(
-                            value: _selectedDrugs.contains(drug),
-                            onChanged: (_) => _toggleSelection(drug) ),
-                    ],
-                  ),
-                  // subtitle: Text('Category: ${drug.category}'),
-                  onTap: () {
-                    if(_isInSelectionMode) {
-                      _toggleSelection(drug);
-                    } else {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DrugDetailScreen(drug: drug),
-                        ),
-                      );
-                    }
-                  },
-                );
+                    );
+                  }
+                },
+              );
             },
           );
         },
