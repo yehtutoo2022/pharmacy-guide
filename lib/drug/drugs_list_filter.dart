@@ -209,6 +209,7 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
     }
   }
 
+  //this function is to download Data from GitHub and save it to sharePreference as drugs_data.json
   Future<void> downloadData() async {
     //git show Burmese font correctly
 
