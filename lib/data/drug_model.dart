@@ -1,4 +1,4 @@
-//model is important to maintain favorite status to provider and prevent duplicate
+
 class Drug {
   final String name;
   final String type;
@@ -28,40 +28,44 @@ class Drug {
     required this.price,
   });
 
+  // Factory constructor to parse JSON data into Drug model
   factory Drug.fromJson(Map<String, dynamic> json) {
     return Drug(
-      name: json['Drug Name '] ?? "",
-      type: json['Type '] ?? "",
+      name: json['Drug Name'] ?? "",
+      type: json['Type'] ?? "",
       ingredients: json['Ingredients'] ?? "",
       category: json['Drug Category'] ?? "",
       drugClass: json['Class'] ?? "",
       indication: json['Indication'] ?? "",
       sideEffects: json['Side Effects'] ?? "",
-      directionUse: json['Direction of Use'] ?? "",
+      directionUse: json['Direction of use'] ?? "",
       sellingUnit: json['Selling Unit'] ?? "",
       manufacture: json['Manufacture'] ?? "",
-      madeIn: json['Made In '] ?? "",
-      price: json['Price'] ?? 0,
+      madeIn: json['Made In'] ?? "",
+      // Handle price conversion from string to int (remove commas)
+      price: int.tryParse(json['Price'].replaceAll(",", "")) ?? 0,
     );
   }
 
+  // Convert Drug object to JSON format
   Map<String, dynamic> toJson() {
     return {
-      'Drug Name ': name,
-      'Type ': type,
+      'Drug Name': name,
+      'Type': type,
       'Ingredients': ingredients,
       'Drug Category': category,
       'Class': drugClass,
       'Indication': indication,
       'Side Effects': sideEffects,
-      'Direction of Use': directionUse,
+      'Direction of use': directionUse,
       'Selling Unit': sellingUnit,
       'Manufacture': manufacture,
-      'Made In ': madeIn,
+      'Made In': madeIn,
       'Price': price,
     };
   }
 
+  // Equality operator override to prevent duplicates
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
@@ -81,6 +85,7 @@ class Drug {
         other.price == price;
   }
 
+  // Override hashCode for efficient lookups
   @override
   int get hashCode {
     return Object.hash(

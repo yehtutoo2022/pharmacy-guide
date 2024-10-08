@@ -45,7 +45,7 @@ Future<void> main() async {
           create: (context) => BookmarkProvider(),
         ),
       ],
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
   // Remove splash screen after the app is ready

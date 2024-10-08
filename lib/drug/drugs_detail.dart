@@ -198,6 +198,130 @@ class _DrugDetailScreenState extends State<DrugDetailScreen> {
             ),
             const SizedBox(height: 34),
 
+            //side effects title
+            Row(
+              children: [
+                const Center(
+                  child: Icon(Icons.ac_unit),
+                ),
+                const SizedBox(width: 8),
+                Center(
+                  child: Text(
+                    'Side-effects - ဘေးထွက်ဆိုးကျိုးများ',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue[800],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+
+            //side effects from database
+            Text(
+              widget.drug.sideEffects,
+              style: const TextStyle(
+                fontSize: 16,
+              ),
+              textAlign: TextAlign.justify,
+            ),
+            const SizedBox(height: 34),
+
+            //Direction of use title
+            Row(
+              children: [
+                const Center(
+                  child: Icon(Icons.data_usage),
+                ),
+                const SizedBox(width: 8),
+                Center(
+                  child: Text(
+                    'Direction of Use - ဆေးအသုံးပြုပုံ',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue[800],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+
+            //side effects from database
+            Text(
+              widget.drug.directionUse,
+              style: const TextStyle(
+                fontSize: 16,
+              ),
+              textAlign: TextAlign.justify,
+            ),
+            const SizedBox(height: 34),
+
+            //Selling Unit title
+            Row(
+              children: [
+                const Center(
+                  child: Icon(Icons.account_tree),
+                ),
+                const SizedBox(width: 8),
+                Center(
+                  child: Text(
+                    'Selling Unit - ရောင်းချသည့်ပုံစံ',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue[800],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+
+            //Selling Unit from database
+            Text(
+              widget.drug.sellingUnit,
+              style: const TextStyle(
+                fontSize: 16,
+              ),
+              textAlign: TextAlign.justify,
+            ),
+            const SizedBox(height: 34),
+
+            //Manufacture title
+            Row(
+              children: [
+                const Center(
+                  child: Icon(Icons.home_repair_service),
+                ),
+                const SizedBox(width: 8),
+                Center(
+                  child: Text(
+                    'Manufacture - ထုတ်လုပ်သည့်ကုမ္ပဏီ',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue[800],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+
+            //Manufacture from database
+            Text(
+              widget.drug.manufacture,
+              style: const TextStyle(
+                fontSize: 16,
+              ),
+              textAlign: TextAlign.justify,
+            ),
+            const SizedBox(height: 34),
+
             //madeIn title
             Row(
               children: [

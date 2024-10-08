@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharmacy_guide2/home.dart';
 import 'package:pharmacy_guide2/setting/more.dart';
 import 'package:pharmacy_guide2/drug/drugs_history.dart';
 import 'package:pharmacy_guide2/ui/news_articles_screen.dart';
@@ -21,10 +22,11 @@ class _HomeMenuState extends State<HomeMenu> {
   void initState() {
     super.initState();
     _screens = [
+      HomePage(),
       const DrugsListFilter(),
       const HistoryScreen(),
       NewsScreen(),
-      MoreScreen(),
+      const MoreScreen(),
     ];
   }
 
@@ -43,6 +45,10 @@ class _HomeMenuState extends State<HomeMenu> {
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.category),
+            label: 'Drugs',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.history),

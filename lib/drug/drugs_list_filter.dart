@@ -276,6 +276,7 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
     }
   }
 
+
   void _showFilterDialog() {
     Vibration.vibrate(duration: 100);
     showDialog(
@@ -531,3 +532,4 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
     );
   }
 }
+
