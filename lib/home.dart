@@ -208,7 +208,7 @@ class _HomePageState extends State<HomePage> {
                     'Articles.....',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                      fontSize: 18,
                     ),
                   ),
                 ],
@@ -216,7 +216,7 @@ class _HomePageState extends State<HomePage> {
               // Animated News List
               _isLoading
                   ? const Center(child: CircularProgressIndicator()) // Show loader while news is fetching
-                  : Container(
+                  : SizedBox(
                 height: 150, // Set height for the news list section
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
@@ -253,7 +253,7 @@ class _HomePageState extends State<HomePage> {
               MaterialPageRoute(builder: (context) => NewsDetailScreen(news: news)),
             );
           },
-          child: Container(
+          child: SizedBox(
             width: 200, // Fixed width for the news card
             height: 200,
             child: Column(

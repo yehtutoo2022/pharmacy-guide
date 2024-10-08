@@ -276,7 +276,6 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
     }
   }
 
-
   void _showFilterDialog() {
     Vibration.vibrate(duration: 100);
     showDialog(
@@ -380,7 +379,8 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
 
   @override
   Widget build(BuildContext context) {
-    final HistoryProvider historyProvider = Provider.of<HistoryProvider>(context, listen: false);
+   // final HistoryProvider historyProvider = Provider.of<HistoryProvider>(context, listen: false);
+    final HistoryProvider historyProvider = Provider.of<HistoryProvider>(context);
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -511,9 +511,10 @@ class _DrugsListFilterState extends State<DrugsListFilter> {
                               fontFamily: 'Pyidaungsu',
                             ),
                           ),
-                          onTap: () {
+                          onTap: () async {
                             //if tap on drug name, it will save to HistoryProvider
-                            historyProvider.addToHistory(drug);
+                           // historyProvider.addToHistory(drug);
+                            await historyProvider.addToHistory(drug);
                             Navigator.push(
                               context,
                               MaterialPageRoute(

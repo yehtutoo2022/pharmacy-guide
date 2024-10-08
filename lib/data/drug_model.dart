@@ -100,6 +100,7 @@ class Drug {
         sellingUnit,
         manufacture,
         madeIn,
-        price);
+        price
+    );
   }
 }

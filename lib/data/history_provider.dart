@@ -22,10 +22,10 @@ class HistoryProvider with ChangeNotifier {
   List<Drug> get history => _history.toList();
 
 
-    void addToHistory(Drug drug) {
+    Future<void> addToHistory(Drug drug) async {
     if (!_history.contains(drug)) {
       _history.add(drug);
-      _saveHistory();
+      await _saveHistory();
       notifyListeners();
     }
   }
@@ -42,9 +42,9 @@ class HistoryProvider with ChangeNotifier {
     }
   }
 
-  void _saveHistory() {
+  Future<void> _saveHistory() async {
     final List<String> historyJson = _history.map((drug) => jsonEncode(drug.toJson())).toList();
-    _prefs?.setStringList('history', historyJson);
+    await _prefs?.setStringList('history', historyJson);
   }
 
   void removeFromHistory(Drug drug) {
